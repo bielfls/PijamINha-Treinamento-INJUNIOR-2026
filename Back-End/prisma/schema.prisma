@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "/@types/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Feedback {
+  id          Int    @id @default(autoincrement())
+  publicId    String @unique @default(uuid(7)) @map("public_id")
+  name        String
+  description String
+  rating      Float
+
+  @@map("feedbacks")
+}
+
+model Pajamas {
+  id          Int           @id @default(autoincrement())
+  publicId    String        @unique @default(uuid(7)) @map("public_id")
+  name        String
+  description String
+  image       String
+  price       Float
+  season      String
+  type        String
+  gender      String
+  sizes       PajamaSize[]
+  favorite    Boolean
+  onSale      Boolean
+  salePercent Float?        @map("sale_percent")
+  sales       SalePajamas[]
+
+  @@map("pajamas")
+}
+
+model PajamaSize {
+  id            Int    @id @default(autoincrement())
+  publicId      String @unique @default(uuid(7)) @map("public_id")
+  stockQuantity Int    @map("stock_quantity")
+  size          String
+
+  pajamaId Int     @map("pajama_id")
+  pajama   Pajamas @relation(fields: [pajamaId], references: [id], onDelete: Cascade)
+
+  @@map("pajamas_size")
+}
+
+model Sale {
+  id       Int    @id @default(autoincrement())
+  publicId String @unique @default(uuid(7)) @map("public_id")
+
+  buyerName     String  @map("buyer_name")
+  cpf           String
+  price         Float
+  paymentMethod String  @map("payment_method")
+  installments  Int     @default(1)
+  cardNumber    String? @map("card_number")
+
+  pajamas SalePajamas[]
+
+  addressId Int     @map("address_id")
+  address   Address @relation(fields: [addressId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("sales")
+}
+
+model SalePajamas {
+  id Int @id @default(autoincrement())
+
+  quantity Int
+  price    Float
+
+  saleId Int  @map("sale_id")
+  sale   Sale @relation(fields: [saleId], references: [id])
+
+  pajamasId Int     @map("pajamas_id")
+  pajamas   Pajamas @relation(fields: [pajamasId], references: [id])
+
+  @@unique([saleId, pajamasId]) //chave composta
+  @@map("sale_pajamas")
+}
+
+model Address {
+  id       Int    @id @default(autoincrement())
+  publicId String @unique @default(uuid(7)) @map("public_id")
+
+  zipCode      String @map("zip_code")
+  state        String
+  city         String
+  neighborhood String
+  address      String
+  number       String
+
+  sale Sale[]
+
+  @@map("address")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  publicId String @unique @default(uuid(7)) @map("public_id")
+
+  name         String
+  username     String @unique
+  email        String @unique
+  passwordHash String @map("password_hash")
+
+  @@map("users")
+}
