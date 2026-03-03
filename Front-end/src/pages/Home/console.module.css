@@ -1,0 +1,218 @@
+.hero {
+  width: 100%;
+  height: 605px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+  background-color: #97C3D8;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+.logo {
+  width: 346px;
+  height: 343px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero p {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 39px;
+  font-style: italic;
+  color: #274553;
+}
+
+.icones {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 24px 0;
+  gap:300px;
+  position: relative;
+}
+
+.iconeItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 180px;
+  z-index: 1;
+}
+
+.iconeItem img {
+  width: 150px;
+  height: 150px;
+}
+
+.iconesBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 60%;
+}
+
+.icones p {
+  font-family: "Nunito Sans", sans-serif;
+  width: 333;
+  height: 88;
+  color: #171717;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.promos {
+  width: 100%;
+  height:927px;
+  position: relative;
+  padding: 40px 0;
+  overflow: visible;
+}
+
+.promosbg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.promosTitle {
+  font-family: "Nunito Sans", sans-serif;
+  color: #74010B;
+  font-size: 48px;
+  font-weight: 400;
+  margin-left: 50px;
+  position: relative;
+  z-index: 1;
+}
+
+.products {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  padding: 32px;
+  justify-content: center;
+  flex-wrap: nowrap;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.feedbackSection {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 200px
+}
+.textoFeed{
+
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 48px;
+    color: #74010B;
+    
+    margin-left: 50px;
+    position: relative;  /* adicione isso */
+  z-index: 1; 
+}
+
+.feedbackContainer {
+  width: calc(405px * 3 + 20px * 2);
+  position: relative;
+  margin: 0 auto;
+  z-index: 1;
+  
+}
+
+.feedbackTrack {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.feedbackTrack::-webkit-scrollbar {
+  display: none;
+}
+
+.feedbackArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+}
+
+.feedbackArrow img {
+  width: 68px; /* ajuste o tamanho aqui */
+  height: 68px;
+}
+
+.feedbackLeft { 
+  left: -80px;
+  top: 60%;
+}
+
+.feedbackRight { 
+  right: -80px;
+  top: 60%;
+}
+.feedbackBtn {
+  display: flex;
+  justify-content: center;
+   padding-top: 80px; /* aumente esse valor */
+  padding-bottom: 40px;
+  position: relative;  /* adicione isso */
+  z-index: 1;
+}
+
+.feedbackLink {
+  background-color: #5b8fa8;
+  color: #fff;
+  border: 2px solid #4a7a8f;
+  font-family: "Montserrat", sans-serif;
+  font-size: 36px;
+  padding: 16px 48px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+
+.feedbackBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.6;
+}
