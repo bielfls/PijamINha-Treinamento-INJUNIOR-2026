@@ -1,4 +1,4 @@
-import type { Pajamas } from "@/@types/prisma/client.js"
+import type { PajamaWithSizes } from "@/http/presenters/pajamas-presenter.js"
 import type { PajamasRepository } from "@/repositories/pajamas-repository.js"
 
 interface CreatePajamaUseCaseRequest {
@@ -15,7 +15,7 @@ interface CreatePajamaUseCaseRequest {
 }
 
 type CreatePajamaUseCaseResponse = {
-    pajama: Pajamas
+    pajama: PajamaWithSizes
 }
 
 export class CreatePajamaUseCase {

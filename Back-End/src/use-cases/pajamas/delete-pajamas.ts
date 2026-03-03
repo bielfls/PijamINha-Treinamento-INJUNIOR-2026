@@ -14,7 +14,7 @@ export class DeletePajamaUseCase {
   constructor(private pajamasRepository: PajamasRepository) {}
 
   async execute({ publicId }: DeletePajamaUseCaseRequest): Promise<DeletePajamaUseCaseResponse> {
-    const pajamaToDelete = await this.pajamasRepository.findById(publicId )
+    const pajamaToDelete = await this.pajamasRepository.findById(publicId)
 
     if (!pajamaToDelete) {
       throw new ResourceNotFoundError()

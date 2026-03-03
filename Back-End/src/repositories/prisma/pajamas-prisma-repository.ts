@@ -15,6 +15,9 @@ export class PrismaPajamasRepository {
                         { size: 'GG', stockQuantity: 0 },
                     ]
                 }
+            },
+            include: {
+                sizes: true
             }
         })
 
@@ -42,7 +45,23 @@ export class PrismaPajamasRepository {
     }
     
     async findById(publicId: string) {
-        const pajama = await prisma.pajamas.findUnique({where: {publicId}})
+        const pajama = await prisma.pajamas.findUnique({
+            where: {
+                publicId
+            }
+        })
+        return pajama
+    }
+
+    async findWithSizesById(publicId: string) {
+        const pajama = await prisma.pajamas.findUnique({
+            where: {
+                publicId
+            },
+            include: {
+                sizes: true
+            }
+        })
         return pajama
     }
 
@@ -53,4 +72,5 @@ export class PrismaPajamasRepository {
             },
         })
     }
+
 }
