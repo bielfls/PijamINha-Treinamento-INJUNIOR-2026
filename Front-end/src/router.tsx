@@ -1,37 +1,25 @@
 import { createBrowserRouter } from "react-router-dom";
+import RootLayout from "./layout/RootLayout";
 import Login from './pages/Login';
 import Registro from "./pages/Registro";
 import Feedback from "./pages/FeedBack";
-import Header from "./components/Header/header"
-import Footer from "./components/Footer/footer"
+import { Catalog } from "./pages/Catalog";
+import PijamaPage from "./pages/PijamaPage/pijamaPage";
 
 const router = createBrowserRouter([
     
     {
-        
-        path:"/",
-        element:<Login />
-    
-    },
-    {
-        
-        path:"/register",
-        element:<Registro />
-    
-    },
-    {
-        
-        path:"/feedback",
-        element:<Feedback />
-    
-    },
-    {
-        path: "/header",
-        element: <Header/>
-    },
-    {
-        path: "/footer",
-        element: <Footer/>
+        path: '/',
+        element: <RootLayout />,
+        children: [
+            {path: "login", element: <Login/>},
+            {path: "registro", element: <Registro/>},
+            {path: "feedback", element: <Feedback/>},
+            {index: true, element: <Catalog/>},
+            {path: "/pijamaPage", element: <PijamaPage/>}
+
+
+        ]
     }
     
 ])

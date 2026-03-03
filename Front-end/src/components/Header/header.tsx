@@ -2,7 +2,7 @@ import {Link} from "react-router-dom"
 import style from "./style.module.css"
 import logo from "../../assets/Logo.svg"
 import cart from "../../assets/Compras.svg"
-import like from "../../assets/Favorito.svg"
+import like from "../../assets/like header.svg"
 import user from "../../assets/User.svg"
 
 

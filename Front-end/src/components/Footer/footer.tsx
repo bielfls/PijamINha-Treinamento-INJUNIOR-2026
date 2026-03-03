@@ -21,7 +21,7 @@ export default function Footer(){
                         </div>
                         <div className={style.iconContainer}>
                             <a href="https://www.instagram.com/injunioruff/"><img src={instagram} alt="instagram" /></a>
-                            <img src={facebook} alt="facebook" />
+                            <a href="https://www.facebook.com/injunioruff?_rdc=1&_rdr#"><img src={facebook} alt="facebook" /></a>
                             <a href="https://www.linkedin.com/company/in-junior/"><img src={linkedin} alt="linkedin" /></a>
                         </div>
                     </div>
