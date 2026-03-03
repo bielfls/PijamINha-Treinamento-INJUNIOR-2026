@@ -3,7 +3,7 @@
     height: 340px;
     display: flex;
     flex-direction: column;
-    border: black solid 1px;
+    border: rgb(244, 239, 239) solid 1px;
 }
 
 .infoContainer{
