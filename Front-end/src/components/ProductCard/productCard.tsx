@@ -1,6 +1,7 @@
 import style from "./style.module.css"
 import likeon from "../../assets/Favorito.svg"
 import likeoff from "../../assets/Favoritado.svg"
+import backgroundImage from "../../assets/Front view of a young lady in pajamas staying in bed.png"
 import { useState } from "react"
 import "./style.module.css"
 
@@ -23,24 +24,24 @@ export default function ProductCard(){
 
     function handleLike(){
         setLiked(curtido => !curtido)
+        console.log("liked!")
     }
 
 
     return(
         <div className={style.cardContainer}>
             <div className={style.imgContainer}>
+                <img src={backgroundImage} alt="" />
                 <div className={style.buttonContainer}>
-                <label style={{cursor: "pointer"}}>
-                    <input
-                        type="checkbox"
-                        onChange={handleLike}
-                        checked={liked}
-                        style={{display: "none"}}
-                    />
-                     <img src={liked ? likeon : likeoff} alt="Liked" /> 
-                </label>
-
-                
+                    <label style={{cursor: "pointer"}}>
+                        <input
+                            type="checkbox"
+                            onChange={handleLike}
+                            checked={liked}
+                            style={{display: "none"}}
+                        />
+                        <img src={liked ? likeon : likeoff} alt="Liked" /> 
+                    </label>
                 </div>
             </div>
             <div className={style.infoContainer}>

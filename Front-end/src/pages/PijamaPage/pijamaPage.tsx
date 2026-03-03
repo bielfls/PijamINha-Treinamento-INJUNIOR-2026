@@ -3,11 +3,14 @@ import styles from "./styles.module.css"
 import plusSymbol from "../../assets/Plus Math.png"
 import minusSymbol from "../../assets/Subtract.png"
 import favSymbol from "../../assets/Favorito.svg"
+import likeOn from "../../assets/Favoritado.svg"
 
 export default function PijamaPage() {
     const sizes : string[] = ["PP", "P", "M", "G", "GG"]
     const [choosenSize, setChoosenSize] = useState<string>("");
     const [quantity, setQuantity] = useState<number>(1);
+    const [liked, setLiked] = useState<boolean>(false)
+
 
     function increaseQuantity() {
         setQuantity(prev => prev + 1);
@@ -18,6 +21,12 @@ export default function PijamaPage() {
             setQuantity(prev => prev - 1);
         }
     }
+
+    function handleLike(){
+        setLiked(curtido => !curtido)
+    }
+
+
 
     return (
         <>
@@ -75,9 +84,16 @@ export default function PijamaPage() {
                                 <button className={styles.addCartBtn}>ADICIONAR AO CARRINHO</button>
                                 
                                 {/* Ainda falta implementar a Troca de Imagens */}
-                                <button style={{backgroundColor: "transparent"}} className={styles.favBtn}>
-                                    <img style={{backgroundColor: "transparent"}} src={favSymbol} alt="Botão de favoritar" />
-                                </button>
+
+                                    <label style={{cursor: "pointer"}}>
+
+                                        <input
+                                            onChange={handleLike} checked={liked} type="checkbox" style={{display: "none", backgroundColor: "transparent"}} className={styles.favBtn}
+                                        />
+                                            
+                                        <img src={liked ? likeOn : favSymbol} alt="Botão de favoritar"/>
+                    
+                                    </label>
                             </div>
                             
                         </div>

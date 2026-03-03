@@ -6,6 +6,7 @@ import {Link} from "react-router-dom"
 import discount from "../../assets/Desconto.svg"
 import linha from "../../assets/Line 10.svg"
 import "./style.module.css"
+import backgroundImage from "../../assets/Front view of a young lady in pajamas staying in bed.png"
 
 
 interface ProductCard{
@@ -31,6 +32,7 @@ export default function DiscountProductCard(){
     return(
         <div className={style.cardContainer}>
             <div className={style.imgContainer}>
+                <img src={backgroundImage} alt="background image" />
                 <div className={style.buttonContainer}>
                 <label style={{cursor: "pointer"}}>
                     <input
@@ -50,7 +52,7 @@ export default function DiscountProductCard(){
             </div>
             <div className={style.infoContainer}>
                 <p style={{color: "#3E677A", fontSize: "24px", fontWeight: "400" }}>PIJAMA FEMININO LONGO - ESTAMPA POÁ</p>
-                <p style={{position: "absolute", top: "45.8rem",color: "#D00D10", fontWeight: "400", fontSize: "16px"}}>R$ 78,90</p>
+                <p style={{position: "absolute", top: "46.4rem",color: "#D00D10", fontWeight: "400", fontSize: "16px"}}>R$ 78,90</p>
                 <img style={{position: "absolute"}} src={linha} alt="linha" />
                 <h1 style={{marginTop: "1rem", color: "#274553", fontSize: "40px", fontWeight: "700"}}>R$ 78,90</h1>
                 <div className={style.parcelaContainer}>

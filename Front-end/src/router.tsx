@@ -5,8 +5,10 @@ import Registro from "./pages/Registro";
 import Feedback from "./pages/FeedBack";
 import { Catalog } from "./pages/Catalog";
 import PijamaPage from "./pages/PijamaPage/pijamaPage";
+import DiscountProductCard from "./components/DiscountProductCard/discountProductCard";
 
 const router = createBrowserRouter([
+    {path: "/DiscountProductCard", element: <DiscountProductCard/>},
     
     {
         path: '/',
@@ -16,7 +18,7 @@ const router = createBrowserRouter([
             {path: "registro", element: <Registro/>},
             {path: "feedback", element: <Feedback/>},
             {index: true, element: <Catalog/>},
-            {path: "/pijamaPage", element: <PijamaPage/>}
+            
 
 
         ]

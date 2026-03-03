@@ -16,18 +16,22 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    background-image: url('../../assets/Front\ view\ of\ a\ young\ lady\ in\ pajamas\ staying\ in\ bed.png');
-    background-size: cover;
-    margin-top: 2rem;
+    position: relative;
 
 }
 
-.buttonContainer{
+.imgContainer img{
+    z-index: -1;
     width: 100%;
+    height: 100%;
+}
+
+.buttonContainer{
+    width: 408px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
+    position: absolute;
     top: 1rem;
     left: 1rem;
     padding-right: 1rem;
