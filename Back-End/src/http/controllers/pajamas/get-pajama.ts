@@ -1,4 +1,5 @@
 import { PajamaPresenter } from '@/http/presenters/pajamas-presenter.js'
+import { ResourceNotFoundError } from '@/use-cases/errors/resourse-not-found-error.js'
 import { makeGetPajamaUseCase } from '@/use-cases/factories/pajamas/make-get-pajama.js'
 import type { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
@@ -17,7 +18,11 @@ export async function getPajamaById(request: FastifyRequest, reply: FastifyReply
 
     return reply.status(200).send({pajama: PajamaPresenter.toHTTP(pajama)})
 
-  } catch (error: any) {
-    return reply.status(404).send({ message: error.message })
-  }
+  } catch (error) {
+        if(error instanceof ResourceNotFoundError) {
+          return reply.status(404).send({ message: error.message})
+        }
+            
+        throw error
+    }
 }

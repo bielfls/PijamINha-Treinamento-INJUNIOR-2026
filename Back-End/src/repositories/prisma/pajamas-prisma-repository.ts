@@ -73,4 +73,48 @@ export class PrismaPajamasRepository {
         })
     }
 
+
+    async listWithSizes({
+        name,
+        page = 1,
+        limit = 5,
+    }: {
+        name?: string
+        page?: number
+        limit?: number
+    }) {
+        const skip = (page - 1) * limit
+
+        const where: Prisma.PajamasWhereInput = {
+            name: name
+                ? {
+                    contains: name,
+                    mode: 'insensitive',
+                }
+                : undefined,
+        }
+
+        const pajamas = await prisma.pajamas.findMany({
+            where,
+            include: {
+                sizes: true
+            },
+            skip,
+            take: limit,
+            orderBy: [{ name: 'asc' }, { id: 'desc' }],
+        })
+
+        const totalCount = await prisma.pajamas.count({
+            where,
+        })
+
+        const totalPages = Math.ceil(totalCount / limit)
+
+        return {
+            data: pajamas,
+            totalCount,
+            totalPages,
+            currentPage: page,
+        }
+    }
 }
