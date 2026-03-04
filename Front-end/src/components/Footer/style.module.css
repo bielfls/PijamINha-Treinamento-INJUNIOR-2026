@@ -55,4 +55,10 @@
     width: 30px;
 }
 
+.copyRight{
+    display: flex;
+    padding: 0.5rem;
+    align-items: center;
+    justify-content: center;
+}
 

@@ -25,7 +25,11 @@ export default function LoginForm(){
     async function loginUser(data:User){
         try{
         await new Promise(resolve => setTimeout(resolve,2000))
-        throw new Error('Erro ao entrar em sua conta ')
+        
+            localStorage.setItem("isAuthenticated", "true")
+            localStorage.setItem("userRole", "Logged")
+            navigate("/")        
+
         
         }catch{
             setError('root', {
@@ -33,6 +37,8 @@ export default function LoginForm(){
             })
         }
         reset()
+
+
 
     }
     
