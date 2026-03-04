@@ -2,6 +2,8 @@ import type { UsersRepository } from "@/repositories/users-repository.js"
 import { hash } from "bcryptjs"
 import { env } from "@/env/index.js"
 import type { User } from "@/@types/prisma/client.js"
+import { ItemAlreadyExistsError } from "../errors/item-already-exists-error.js"
+import { ResourceNotFoundError } from "../errors/resourse-not-found-error.js"
 
 interface UpdateUserUseCaseRequest {
   publicId: string
@@ -28,19 +30,14 @@ export class UpdateUserUseCase {
     const userToUpdate = await this.usersRepository.getUser({ publicId })
 
     if (!userToUpdate) {
-        throw new Error("Usuário não encontrado")
+        throw new ResourceNotFoundError()
     }
 
     if (email || username) {
         const existingUser = await this.usersRepository.findByUsernameOrEmail(email, username)
 
         if (existingUser && existingUser.id !== userToUpdate.id) {
-        if (email && existingUser.email === email) {
-            throw new Error("Email já cadastrado")
-        }
-        if (username && existingUser.username === username) {
-            throw new Error("Username já cadastrado")
-        }
+          throw new ItemAlreadyExistsError()
         }
     }
 

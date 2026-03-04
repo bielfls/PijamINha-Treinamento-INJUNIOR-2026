@@ -2,6 +2,7 @@ import z from "zod"
 import type { FastifyReply, FastifyRequest } from "fastify"
 import { UserPresenter } from "@/http/presenters/users-presenter.js"
 import { makeCreateUserUseCase } from "@/use-cases/factories/users/make-create-user.js"
+import { ItemAlreadyExistsError } from "@/use-cases/errors/item-already-exists-error.js"
 
 
 export async function createUser(request: FastifyRequest, reply: FastifyReply) {
@@ -26,6 +27,11 @@ export async function createUser(request: FastifyRequest, reply: FastifyReply) {
 
         return reply.status(201).send(UserPresenter.toHTTP(user))
     } catch (error) {
-        throw new Error()
+        if (error instanceof ItemAlreadyExistsError) {
+            return reply.status(409).send({
+                message: error.message
+            })
+        }
+        throw error
     }
 }

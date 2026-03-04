@@ -2,6 +2,8 @@ import type { FastifyRequest, FastifyReply } from "fastify"
 import { z } from "zod"
 import { makeUpdateUserUseCase } from "@/use-cases/factories/users/make-update-user.js"
 import { UserPresenter } from "@/http/presenters/users-presenter.js"
+import { ResourceNotFoundError } from "@/use-cases/errors/resourse-not-found-error.js"
+import { ItemAlreadyExistsError } from "@/use-cases/errors/item-already-exists-error.js"
 
 export async function updateUser(request: FastifyRequest, reply: FastifyReply) {
     try {
@@ -26,6 +28,16 @@ export async function updateUser(request: FastifyRequest, reply: FastifyReply) {
         })
         return reply.status(200).send(UserPresenter.toHTTP(user))
     } catch (error) {
+        if (error instanceof ResourceNotFoundError) {
+            return reply.status(404).send({
+                message: error.message
+            })
+        }
+        if (error instanceof ItemAlreadyExistsError) {
+            return reply.status(409).send({
+                message: error.message
+            })
+        }
         throw new Error()
     }
 }

@@ -1,6 +1,7 @@
 import type { FastifyRequest, FastifyReply } from "fastify"
 import { z } from "zod"
 import { makeDeleteUserUseCase } from "@/use-cases/factories/users/make-delete-user.js"
+import { ResourceNotFoundError } from "@/use-cases/errors/resourse-not-found-error.js"
 
 export async function deleteUser(request: FastifyRequest, reply: FastifyReply) {
     try {
@@ -15,6 +16,11 @@ export async function deleteUser(request: FastifyRequest, reply: FastifyReply) {
 
         return reply.status(204).send()
     } catch (error) {
-        throw new Error()
+        if (error instanceof ResourceNotFoundError) {
+            return reply.status(404).send({
+                message: error.message
+            })
+        }
+        throw error
     }
 }
