@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 const feedbackSchema = z.object({
-    name:z.string().nonempty('Insira seu nome').regex(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$,'O nome não pode conter números e(ou) caractéres especiais'/),
+    name:z.string().nonempty('Insira seu nome').regex(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/,'O nome não pode conter números e(ou) caractéres especiais'),
     feedback:z.string().nonempty('Insira seu feedback'),
 
 })

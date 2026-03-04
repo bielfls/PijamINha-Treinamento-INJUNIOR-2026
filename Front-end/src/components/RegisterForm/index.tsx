@@ -5,10 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router-dom'
 
 const accountSchema = z.object({
-    name:z.string().nonempty('Insira seu nome').regex(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$,'O nome não pode conter números'/),
-    nick:z.string().nonempty('Insira seu nome').regex(/^[A-Za-z0-9._\-!@#$]+$,'O user name não pode conter acentos e(ou) espaços'/),
+    name:z.string().nonempty('Insira seu nome').regex(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/,'O nome não pode conter números'),
+    nick:z.string().nonempty('Insira seu username').regex(/^[A-Za-z0-9._\-!@#$]+$/,'O user name não pode conter acentos e(ou) espaços'),
     email:z.string().nonempty('Insira seu email').email(),
-    password: z.string().nonempty('Insira sua senha').min(6,'A senha dev ter no mínimo 6 caracteres').regex(/^[A-Za-zÀ-ÖØ-öø-ÿ0-9._\-!@#$]+$,'A senha não pode conter espaços'/),
+    password: z.string().nonempty('Insira sua senha').min(6,'A senha dev ter no mínimo 6 caracteres').regex(/^[A-Za-zÀ-ÖØ-öø-ÿ0-9._\-!@#$]+$/,'A senha não pode conter espaços'),
     confirmPassword:z.string().nonempty('A confirmação deve ser preenchida'),
 }).refine(data => data.password === data.confirmPassword,{
     message: 'As senhas não coincidem',
