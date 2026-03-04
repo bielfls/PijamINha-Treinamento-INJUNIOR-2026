@@ -12,7 +12,7 @@ export class DeleteSaleUseCase {
   async execute({ publicId }: DeleteSaleUseCaseRequest): Promise<void> {
     
     const SaleToDelete = await this.salesRepository.findBy({publicId})
-
+    
     if (!SaleToDelete) {
       throw new ResourceNotFoundError()
     }

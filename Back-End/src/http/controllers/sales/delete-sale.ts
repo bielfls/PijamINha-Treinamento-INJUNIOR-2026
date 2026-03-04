@@ -9,7 +9,7 @@ export async function deleteSale(request: FastifyRequest, reply: FastifyReply){
     try{
 
         const deleteSaleParamsSchema = z.object({
-            publicId: z.string().uuid()
+            publicId: z.string()
         })
     
         const { publicId } = deleteSaleParamsSchema.parse(request.params)

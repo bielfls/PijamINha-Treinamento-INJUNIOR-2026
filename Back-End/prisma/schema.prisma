@@ -86,7 +86,7 @@ model SalePajamas {
   price    Float
 
   saleId Int  @map("sale_id")
-  sale   Sale @relation(fields: [saleId], references: [id])
+  sale   Sale @relation(fields: [saleId], references: [id], onDelete: Cascade)
 
   pajamasId Int     @map("pajamas_id")
   pajamas   Pajamas @relation(fields: [pajamasId], references: [id])
