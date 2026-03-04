@@ -3,6 +3,9 @@ import type {
   SalesRepository,
   SaleWithRelation,
 } from '@/repositories/sales-repository.js'
+import { ResourceNotFoundError } from '../errors/resourse-not-found-error.js'
+import type { PajamasSizeRepository } from '@/repositories/pajamas-size-repository.js'
+import { InsufficientStock } from '../errors/insufficient-stock-error.js'
 
 interface CreateSaleUseCaseRequest {
     buyerName: string
@@ -32,7 +35,9 @@ interface CreateSaleUseCaseResponse {
 }
 
 export class CreateSaleUseCase {
-  constructor(private saleRepository: SalesRepository, private pajamaRepository: PajamasRepository) {}
+  constructor(private saleRepository: SalesRepository, private pajamaRepository: PajamasRepository,
+    private pajamaSizeRepository: PajamasSizeRepository
+  ) {}
 
   async execute({
     buyerName,
@@ -50,9 +55,32 @@ export class CreateSaleUseCase {
         number}, 
         pajamasBuy}: CreateSaleUseCaseRequest): Promise<CreateSaleUseCaseResponse> {
 
-    const formatPajamas = pajamasBuy.map(async (pajama) => {
-      const foundPajama = await this.pajamaRepository.findBy({})
-    })
+    const formatPajamas = await Promise.all(pajamasBuy.map(async (pajama) => {
+
+      const foundPajama = await this.pajamaRepository.findById(pajama.pajamaId)
+
+      if(!foundPajama){
+        throw new ResourceNotFoundError()
+      }
+
+      const pajamaSize = await this.pajamaSizeRepository.findBy(foundPajama.id,pajama.size,)
+
+      if(!pajamaSize){
+        throw new ResourceNotFoundError()
+      }
+
+      if(!(pajamaSize.stockQuantity < pajama.count)){
+        throw new InsufficientStock()
+      }
+
+      await this.pajamaSizeRepository.decrementStock(foundPajama.id,pajama.size, pajama.count)
+      
+      return {
+        pajamasId: foundPajama.id,
+        price: foundPajama.price,
+        quantity: pajama.count,
+      }
+    }))
 
     const sale = await this.saleRepository.create({
         buyerName,
@@ -73,11 +101,9 @@ export class CreateSaleUseCase {
         },
       pajamas: {
         createMany: {
-          data: pajamasBuy.map( (pajama) =>({
-            pajamasId
-          })) 
-        }
-      }})
+          data: formatPajamas
+      }}})
+
 
         return { sale }
 }
