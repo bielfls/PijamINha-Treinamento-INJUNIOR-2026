@@ -3,6 +3,7 @@
     height: 340px;
     display: flex;
     flex-direction: column;
+    border: black solid 1px;
 }
 
 .infoContainer{
@@ -12,6 +13,7 @@
     justify-content: space-between;
     align-items:end;
     padding: 2rem;
+    margin-top: 20px;
 }
 
 .copyRight{
