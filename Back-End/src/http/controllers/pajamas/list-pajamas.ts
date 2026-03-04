@@ -6,17 +6,23 @@ import { z } from 'zod'
 export async function listPajamas(request: FastifyRequest, reply: FastifyReply) {
     const listPajamasSchema = z.object({
         name: z.string().optional(),
+        season: z.string().optional(),
+        type: z.string().optional(),
+        gender: z.string().optional(),
         page: z.coerce.number().int().positive().default(1),
         limit: z.coerce.number().int().positive().max(50).default(5),
     })
   
-    const { name, page, limit } = listPajamasSchema.parse(request.query)
+    const { name, season, type, gender, page, limit } = listPajamasSchema.parse(request.query)
 
     const listPajamasUseCase = makeListPajamasUseCase()
 
     const { pajamas, totalCount, totalPages, currentPage } =
         await listPajamasUseCase.execute({
             name,
+            season,
+            type,
+            gender,
             page,
             limit,
         })

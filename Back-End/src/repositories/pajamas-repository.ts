@@ -2,7 +2,10 @@ import type { Prisma, Pajamas } from "@/@types/prisma/client.js"
 import type { PajamaWithSizes } from "@/http/presenters/pajamas-presenter.js"
 
 interface ListPajamasQuery {
-    name?: string 
+    name?: string
+    season?: string 
+    type?: string
+    gender?: string
     page?: number
     limit?: number
 }
