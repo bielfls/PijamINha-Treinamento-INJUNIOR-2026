@@ -51,7 +51,7 @@ model PajamaSize {
   pajamaId Int     @map("pajama_id")
   pajama   Pajamas @relation(fields: [pajamaId], references: [id], onDelete: Cascade)
 
-  @@unique([size, pajamaId])
+  @@unique([size, pajamaId]) //chave composta
   @@map("pajamas_size")
 }
 
@@ -69,7 +69,10 @@ model Sale {
   pajamas SalePajamas[]
 
   addressId Int     @map("address_id")
-  address   Address @relation(fields: [addressId], references: [id])
+  address   Address @relation(fields: [addressId], references: [id], onDelete: Cascade)
+
+  userId Int @map("user_id")
+  user User @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at")
 
@@ -116,6 +119,8 @@ model User {
   username     String @unique
   email        String @unique
   passwordHash String @map("password_hash")
+
+  sale Sale[]
 
   @@map("users")
 }

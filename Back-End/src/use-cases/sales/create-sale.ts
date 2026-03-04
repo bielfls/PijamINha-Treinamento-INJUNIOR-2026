@@ -6,28 +6,28 @@ import type {
 import { ResourceNotFoundError } from '../errors/resourse-not-found-error.js'
 import type { PajamasSizeRepository } from '@/repositories/pajamas-size-repository.js'
 import { InsufficientStock } from '../errors/insufficient-stock-error.js'
+import type { UsersRepository } from '@/repositories/users-repository.js'
 
 interface CreateSaleUseCaseRequest {
-    buyerName: string
-    cpf: string
-    price: number
-    paymentMethod: string
-    installments: number
-    cardNumber?: string
-    address: {
-        zipCode: string
-        state: string
-        city: string
-        neighborhood: string
-        address: string
-        number: string
-    }
-    pajamasBuy: {
-        pajamaId: string
-        size: string
-        count: number
-    }[]
-
+  userId: string
+  buyerName: string
+  cpf: string
+  paymentMethod: string
+  installments: number
+  cardNumber?: string
+  address: {
+    zipCode: string
+    state: string
+    city: string
+    neighborhood: string
+    address: string
+    number: string
+  }
+  pajamasBuy: {
+    pajamasId: string
+    size: string
+    quantity: number
+  }[]
 }
 
 interface CreateSaleUseCaseResponse {
@@ -35,76 +35,98 @@ interface CreateSaleUseCaseResponse {
 }
 
 export class CreateSaleUseCase {
-  constructor(private saleRepository: SalesRepository, private pajamaRepository: PajamasRepository,
-    private pajamaSizeRepository: PajamasSizeRepository
+  constructor(
+    private saleRepository: SalesRepository,
+    private pajamaRepository: PajamasRepository,
+    private pajamaSizeRepository: PajamasSizeRepository,
+    private usersRepository: UsersRepository
   ) {}
 
   async execute({
+    userId,
     buyerName,
     cpf,
-    price,
     paymentMethod,
     installments,
     cardNumber,
-    address: {
-        zipCode,
-        state,
-        city,
-        neighborhood,
-        address,
-        number}, 
-        pajamasBuy}: CreateSaleUseCaseRequest): Promise<CreateSaleUseCaseResponse> {
+    address: { zipCode, state, city, neighborhood, address, number },
+    pajamasBuy,
+  }: CreateSaleUseCaseRequest): Promise<CreateSaleUseCaseResponse> {
 
-    const formatPajamas = await Promise.all(pajamasBuy.map(async (pajama) => {
+    const user = await this.usersRepository.getUser({publicId: userId})
 
-      const foundPajama = await this.pajamaRepository.findById(pajama.pajamaId)
-
-      if(!foundPajama){
+    if(!user){
         throw new ResourceNotFoundError()
-      }
+    }
 
-      const pajamaSize = await this.pajamaSizeRepository.findBy(foundPajama.id,pajama.size,)
+    const formatPajamas = await Promise.all(
+      pajamasBuy.map(async (pajama) => {
+        const foundPajama = await this.pajamaRepository.findById(
+          pajama.pajamasId,
+        )
 
-      if(!pajamaSize){
-        throw new ResourceNotFoundError()
-      }
+        if (!foundPajama) {
+          throw new ResourceNotFoundError()
+        }
 
-      if(!(pajamaSize.stockQuantity < pajama.count)){
-        throw new InsufficientStock()
-      }
+        const pajamaSize = await this.pajamaSizeRepository.findBy(
+          foundPajama.id,
+          pajama.size,
+        )
 
-      await this.pajamaSizeRepository.decrementStock(foundPajama.id,pajama.size, pajama.count)
-      
-      return {
-        pajamasId: foundPajama.id,
-        price: foundPajama.price,
-        quantity: pajama.count,
-      }
-    }))
+        if (!pajamaSize) {
+          throw new ResourceNotFoundError()
+        }
+
+        if (pajamaSize.stockQuantity < pajama.quantity) {
+          throw new InsufficientStock()
+        }
+
+        await this.pajamaSizeRepository.decrementStock(
+          foundPajama.id,
+          pajama.size,
+          pajama.quantity,
+        )
+
+        return {
+          pajamasId: foundPajama.id,
+          price: foundPajama.price,
+          quantity: pajama.quantity,
+        }
+      }),
+    )
+
+    const totalPrice = formatPajamas.reduce((sum, pajama) => sum + (pajama.price * pajama.quantity), 0)
 
     const sale = await this.saleRepository.create({
-        buyerName,
-        cpf,
-        price,
-        paymentMethod,
-        installments,
-        cardNumber,
-        address: {
-          create: {
-            zipCode,
-            state,
-            city,
-            neighborhood,
-            address,
-            number
-          }
+      user: {
+        connect: {
+          id: user.id
+        }
+      },
+      buyerName,
+      cpf,
+      price: totalPrice,
+      paymentMethod,
+      installments,
+      cardNumber,
+      address: {
+        create: {
+          zipCode,
+          state,
+          city,
+          neighborhood,
+          address,
+          number,
         },
+      },
       pajamas: {
         createMany: {
-          data: formatPajamas
-      }}})
+          data: formatPajamas,
+        },
+      },
+    })
 
-
-        return { sale }
-}
+    return { sale }
+  }
 }
