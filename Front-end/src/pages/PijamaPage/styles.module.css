@@ -220,7 +220,7 @@
     font-size: 24px;
     line-height: 100%;
     letter-spacing: 0%;
-    color: black;
+    color: var(--black);
 }
 
 .manageQuantityDiv {
@@ -255,14 +255,14 @@
     }
 }
 
-.manageQuantityDiv p {
+.quantity {
     font-family: Nunito Sans;
     font-weight: 500;
     font-style: Medium;
     font-size: 24px;
     line-height: 100%;
     letter-spacing: 0%;
-    color: black;
+    color: var(--black);
 }
 
 .shopFavDiv {

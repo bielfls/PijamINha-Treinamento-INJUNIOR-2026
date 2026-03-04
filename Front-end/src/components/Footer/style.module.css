@@ -3,9 +3,9 @@
     height: 340px;
     display: flex;
     flex-direction: column;
-    border: rgb(244, 239, 239) solid 1px;
-}
+    border: black solid 1px;
 
+}
 .infoContainer{
     width: 100%;
     height: 303px;

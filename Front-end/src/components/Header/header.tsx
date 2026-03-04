@@ -28,7 +28,7 @@ export default function Header(){
                     </Link>
                 </div>
                 <div className={style.User}>
-                    <Link to="/userPage">
+                    <Link to="/login">
                         <img src={user} alt="user" />
                     </Link>
                 </div>

@@ -4,6 +4,8 @@
     height:auto;
     background-size: cover; 
     background-position: center; 
-    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
