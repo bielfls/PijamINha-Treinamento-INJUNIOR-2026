@@ -1,9 +1,8 @@
 .load{
     width: 488px;
     height: 600px;
-    margin-top: 92px;
-    margin-left: 420px;
-    margin-bottom:92px;
+    margin-top:30px;
+    margin-bottom:30px;
     border-width: 2px;
     background-color: #74010B;
     border:none;
@@ -138,4 +137,11 @@
     background-color: #cf0d1d;
     transform: scale(1.1);
     transition: 0.7s;
+}
+.error{
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    color: #97C3D8;
 }

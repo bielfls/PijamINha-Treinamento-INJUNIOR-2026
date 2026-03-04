@@ -75,7 +75,7 @@ export default function PijamaPage() {
                                 <h3>Quantidade:</h3>
                                 <div className={styles.manageQuantityDiv}>
                                     <button onClick={decreaseQuantity}><img src={minusSymbol} alt="Símbolo de Subtração" /></button>
-                                    <p>{quantity}</p>
+                                    <p className={styles.quantity}>{quantity}</p>
                                     <button onClick={increaseQuantity}><img src={plusSymbol} alt="Símbolo de Adição" /></button>
                                 </div>
                             </div>

@@ -12,14 +12,12 @@ export default function Stars(){
     function handleClick(e:React.MouseEvent<HTMLButtonElement>, star: number){
         const botaoAtual = starRefs.current[star]
         if(!botaoAtual) return
-
-        const computedStyle = window.getComputedStyle(botaoAtual);
-        const width = parseFloat(computedStyle.width);
-
+        
         const x = e.clientX
 
         const inside = botaoAtual.getBoundingClientRect();
         const comeco = inside.left;
+        const width = inside.width;
 
         const click = x - comeco;
 

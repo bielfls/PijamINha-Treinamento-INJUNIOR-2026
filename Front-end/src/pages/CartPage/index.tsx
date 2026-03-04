@@ -1,0 +1,53 @@
+import styles from './styles.module.css';
+import redCart from '../../assets/RedCart.png';
+import favSyboml from '../../assets/Favorito.svg';
+
+export default function CartPage() {
+    return(
+        <>
+            <main>
+                <section className={styles.cartTitles}>
+                    <div className={styles.titleContainer}>
+                        <figure>
+                            <img src={redCart} alt="Símbolo de carrinho de compras" />
+                        </figure>
+                        
+                        <h1 className={styles.cartTitle}>Carrinho</h1>
+                    </div>
+
+                    <div className={styles.titleContainer}>
+                        <figure>
+                            <img src={favSyboml} alt="Símbolo de favorito" />
+                        </figure>
+                        
+                        <h1 className={styles.favTitle}>Favoritos</h1>
+                    </div>
+                
+                </section>
+                
+                <section className={styles.cartShop}>
+
+                    <ul className={styles.cartItems}>
+                        <div style={{width: "1344px", height: "287px", border: "1px solid black"}}></div>
+                        <div style={{width: "1344px", height: "287px", border: "1px solid black"}}></div>
+                        <div style={{width: "1344px", height: "287px", border: "1px solid black"}}></div>
+                        <div style={{width: "1344px", height: "287px", border: "1px solid black"}}></div>
+                    </ul>
+                    
+
+                    <div className={styles.shoppingResume}>
+                        <div className={styles.totalPrice}>
+                            <p>Total</p>
+                            <p>R$ 2.000,00</p>
+                        </div>
+                        
+                        <button className={styles.shopBtn}>COMPRE TUDO</button>
+
+                    </div>
+
+                </section>
+            
+            </main>  
+        </>
+    )
+}
