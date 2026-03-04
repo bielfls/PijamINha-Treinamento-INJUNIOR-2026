@@ -13,7 +13,7 @@ export default function Header(){
                 <img src={logo} alt="Logo" />
             </Link>
             <div className={style.linksContainer}>
-                <Link className={style.link} to="/pijamas">PIJAMAS</Link>
+                <Link className={style.link} to="/catalogo">PIJAMAS</Link>
                 <Link className={style.link} to="/feminino">FEMININO</Link>
                 <Link className={style.link} to="/masculino">MASCULINO</Link>
                 <Link className={style.link} to="/infantil">INFANTIL</Link>

@@ -125,6 +125,7 @@
   align-items: flex-start;
 }
 
+
 .feedbackSection {
   position: relative;
   overflow: hidden;
@@ -138,7 +139,7 @@
     color: var(--red-400);
     
     margin-left: 50px;
-    position: relative;  /* adicione isso */
+    position: relative;  
   z-index: 1; 
 }
 
@@ -190,9 +191,9 @@
 .feedbackBtn {
   display: flex;
   justify-content: center;
-   padding-top: 80px; /* aumente esse valor */
+   padding-top: 80px; 
   padding-bottom: 40px;
-  position: relative;  /* adicione isso */
+  position: relative;  
   z-index: 1;
 }
 

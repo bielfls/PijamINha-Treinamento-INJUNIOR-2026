@@ -6,7 +6,7 @@ import background2 from "../../assets/background2.png";
 import caminhao from "../../assets/truckicon.png";
 import pessoas from "../../assets/pessoasicon.png";
 import pijama from "../../assets/pijamaicon.png";
-import ProductCard from "../../components/PJCards";
+import DiscountProductCard from "../../components/DiscountProductCard/discountProductCard";
 import pijama1 from "../../assets/pijama1.jpg";
 import { useRef } from "react";
 import FeedbackCard from "../../components/FeedbackCards";
@@ -69,28 +69,11 @@ const scroll = (direction: number) => {
   <img src={background2} alt="background" className={styles.feedbackBg} />
   <p className={styles.promosTitle}>Nossas últimas promoções!</p>
   <div className={styles.products}>
-    <ProductCard
-      image={pijama1}
-      name="Pijama Feminino Longo – Estampa Poá"
-      originalPrice={78.90}
-      discountPrice={67.06}
-      installments={6}
-    />
-    <ProductCard
-      image={pijama1}
-      name="Pijama Feminino Longo – Estampa Poá"
-      originalPrice={78.90}
-      discountPrice={67.06}
-      installments={6}
-    />
 
-    <ProductCard
-      image={pijama1}
-      name="Pijama Feminino Longo – Estampa Poá"
-      originalPrice={78.90}
-      discountPrice={67.06}
-      installments={6}
-    />
+    <DiscountProductCard />
+    <DiscountProductCard />
+    <DiscountProductCard />
+
   </div>
 </section>
 <section className={styles.feedbackSection}>
