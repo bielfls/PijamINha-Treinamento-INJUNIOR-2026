@@ -101,3 +101,11 @@
     transform: scale(1.1);
     transition: 0.7s;
 }
+.error{
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    text-align: center;
+    color:  #97C3D8;
+}
