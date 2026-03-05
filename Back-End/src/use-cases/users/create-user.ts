@@ -24,25 +24,21 @@ export class CreateUserUseCase {
         email,
         password
     }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
-        try {
-            const userAlreadyExists = await this.usersRepository.findByUsernameOrEmail(email, username)
+        const userAlreadyExists = await this.usersRepository.findByUsernameOrEmail(email, username)
 
-            if (userAlreadyExists) {
-                throw new ItemAlreadyExistsError()
-            }
-
-            const passwordHash = await hash(password, env.HASH_SALT_ROUNDS)
-
-            const user = await this.usersRepository.createUser({
-                name,
-                username,
-                email,
-                passwordHash
-            })
-
-            return {user}
-        } catch (error) {
-            throw new Error()
+        if (userAlreadyExists) {
+            throw new ItemAlreadyExistsError()
         }
+
+        const passwordHash = await hash(password, env.HASH_SALT_ROUNDS)
+
+        const user = await this.usersRepository.createUser({
+            name,
+            username,
+            email,
+            passwordHash
+        })
+
+        return {user}
     }
 }
