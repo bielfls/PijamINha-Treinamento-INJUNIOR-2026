@@ -22,7 +22,7 @@ export interface RegisterResponse {
     token:string,
     user:User
 }
-export interface Feedback {
+export interface FeedbackRequest {
     name:string;
     description:string;
     rating:number;
