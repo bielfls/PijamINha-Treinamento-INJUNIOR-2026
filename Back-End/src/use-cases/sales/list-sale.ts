@@ -18,6 +18,8 @@ export class ListSaleUseCase{
     constructor(private saleRespository: SalesRepository){}
 
     async execute({userId, page, limit}:ListSaleUseCaseRequest): Promise<ListSaleUseCaseResponse>{
+
+        
         const { data: sale, totalCount, totalPage, currentPage} = await this.saleRespository.list({userId, page, limit})
         return { sale, totalCount, totalPage, currentPage }
     }
