@@ -1,4 +1,5 @@
 import { SalePresenter } from "@/http/presenters/sales-presenter.js";
+import { InvalidCredentialsError } from "@/use-cases/errors/invalid-credentials-error.js";
 import { ResourceNotFoundError } from "@/use-cases/errors/resourse-not-found-error.js";
 import { makeUpdateAddressUseCase } from "@/use-cases/factories/sale/make-update-address-sale.js";
 import type { FastifyReply, FastifyRequest } from "fastify";
@@ -49,9 +50,9 @@ export async function updateAddress(request: FastifyRequest, reply: FastifyReply
         if(error instanceof ResourceNotFoundError){
             return reply.status(404).send({message: error.message})
         }
-        /*if(error instanceof CrendentialInvalid){
+        if(error instanceof InvalidCredentialsError){
             return reply.status(401).send({message: error.message})
-        }*/
+        }
        throw error
     }
 }

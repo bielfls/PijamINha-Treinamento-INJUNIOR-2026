@@ -1,6 +1,7 @@
 import type { SalesRepository, SaleWithRelation } from "@/repositories/sales-repository.js"
 import type { UsersRepository } from "@/repositories/users-repository.js"
 import { ResourceNotFoundError } from "../errors/resourse-not-found-error.js"
+import { InvalidCredentialsError } from "../errors/invalid-credentials-error.js"
 
 
 interface UpdateAddressUseCaseRequest{
@@ -45,9 +46,9 @@ export class UpdateAddressUseCase{
             throw new ResourceNotFoundError
         }
 
-        /*if(user.id != saleToUpdate.userId){
-            throw new CredentialInvalid
-        }*/
+        if(user.id != saleToUpdate.userId){
+            throw new InvalidCredentialsError
+        }
 
         const sale  = await this.salesRepository.update(saleToUpdate.id, {
             address: {
