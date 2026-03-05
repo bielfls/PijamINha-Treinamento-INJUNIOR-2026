@@ -13,7 +13,9 @@ export function setupInterceptors(instance: AxiosInstance){
         return config
     })
 
-    instance.interceptors.response.use((error)=>{
+    instance.interceptors.response.use(
+        (response)=> response,
+        (error)=>{
         if(error.status === 401){
             useAuthStore.getState().setToken(undefined);
         }
