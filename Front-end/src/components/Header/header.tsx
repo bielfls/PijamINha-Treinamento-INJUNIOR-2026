@@ -9,21 +9,21 @@ import user from "../../assets/User.svg"
 export default function Header(){
     return(
         <div className={style.headerContainer}>
-            <Link to="/home" className={style.imgContainer}>
+            <Link to="/" className={style.imgContainer}>
                 <img src={logo} alt="Logo" />
             </Link>
             <div className={style.linksContainer}>
-                <Link className={style.link} to="/pijamas">PIJAMAS</Link>
+                <Link className={style.link} to="/catalogo">PIJAMAS</Link>
                 <Link className={style.link} to="/feminino">FEMININO</Link>
                 <Link className={style.link} to="/masculino">MASCULINO</Link>
                 <Link className={style.link} to="/infantil">INFANTIL</Link>
             </div>
             <div className={style.userSection}>
                 <div className={style.cartLike}>
-                    <Link to="/carrinho">
+                    <Link to="/cartPage">
                         <img src={cart} alt="carrinho" />
                     </Link>
-                    <Link to="/curtidos">
+                    <Link to="/favoritos">
                         <img src={like} alt="curtidos" />
                     </Link>
                 </div>

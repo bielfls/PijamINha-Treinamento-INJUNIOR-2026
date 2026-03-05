@@ -3,6 +3,7 @@ import watermark from "../../assets/watermark.svg"
 import instagram from "../../assets/mdi_instagram.svg"
 import facebook from "../../assets/ri_facebook-fill.svg"
 import linkedin from "../../assets/ri_linkedin-fill.svg"
+import copyright from "../../assets/Group 4.png"
 
 
 export default function Footer(){
@@ -33,7 +34,7 @@ export default function Footer(){
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4608.344090673946!2d-43.13596662374335!3d-22.906350637857273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x99817ed79f10f3%3A0xb39c7c0639fbc9e8!2sIN%20Junior%20-%20Empresa%20Junior%20de%20Computa%C3%A7%C3%A3o%20da%20UFF!5e1!3m2!1spt-BR!2sbr!4v1772539873594!5m2!1spt-BR!2sbr" width="325" height="244" style={{border: 0}}  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
-            <div className={style.copyRight}></div>
+            <div className={style.copyRight}><img src={copyright} alt="" /> </div>
         </div>
     )
 }

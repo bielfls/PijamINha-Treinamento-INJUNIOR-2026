@@ -2,6 +2,7 @@ import z from "zod"
 import type { FastifyReply, FastifyRequest } from "fastify"
 import { UserPresenter } from "@/http/presenters/users-presenter.js"
 import { makeAuthenticateUseCase } from "@/use-cases/factories/users/make-authenticate.js"
+import { InvalidCredentialsError } from "@/use-cases/errors/invalid-credentials-error.js"
 
 export async function authenticate(request: FastifyRequest, reply: FastifyReply) {
     try {
@@ -27,6 +28,11 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
 
         return reply.status(201).send({token, user: UserPresenter.toHTTP(user)})
     }   catch (error) {
-        throw new Error()
+        if (error instanceof InvalidCredentialsError) {
+            return reply.status(401).send({
+                message: error.message
+            })
+        } 
+        throw error
     }
 }

@@ -76,10 +76,16 @@ export class PrismaPajamasRepository {
 
     async listWithSizes({
         name,
+        season,
+        type,
+        gender,
         page = 1,
         limit = 5,
     }: {
         name?: string
+        season?: string 
+        type?: string
+        gender?: string
         page?: number
         limit?: number
     }) {
@@ -89,6 +95,24 @@ export class PrismaPajamasRepository {
             name: name
                 ? {
                     contains: name,
+                    mode: 'insensitive',
+                }
+                : undefined,
+            season: season
+                ? {
+                    contains: season,
+                    mode: 'insensitive',
+                }
+                : undefined,
+            type: type
+                ? {
+                    contains: type,
+                    mode: 'insensitive',
+                }
+                : undefined,
+            gender: gender
+                ? {
+                    contains: gender,
                     mode: 'insensitive',
                 }
                 : undefined,

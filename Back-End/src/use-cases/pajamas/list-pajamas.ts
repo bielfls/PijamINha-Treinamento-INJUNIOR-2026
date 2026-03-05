@@ -3,6 +3,9 @@ import type { PajamasRepository } from '@/repositories/pajamas-repository.js'
 
 interface ListPajamasUseCaseRequest {
   name?: string
+  season?: string 
+  type?: string
+  gender?: string
   page: number
   limit: number
 }
@@ -19,6 +22,9 @@ export class ListPajamasUseCase {
 
   async execute({
     name,
+    season,
+    type,
+    gender,
     page,
     limit,
   }: ListPajamasUseCaseRequest): Promise<ListPajamasUseCaseResponse> {
@@ -27,7 +33,7 @@ export class ListPajamasUseCase {
       totalCount,
       totalPages,
       currentPage,
-    } = await this.pajamasRepository.listWithSizes({ name, page, limit })
+    } = await this.pajamasRepository.listWithSizes({ name, season, type, gender, page, limit })
 
     return {
       pajamas,
