@@ -40,7 +40,7 @@ export class SalesPrismaRepository implements SalesRepository{
             
         }: {}
 
-        const user = await prisma.sale.findMany({
+        const sale = await prisma.sale.findMany({
             where,
             include: {
                 address: true,
@@ -50,11 +50,11 @@ export class SalesPrismaRepository implements SalesRepository{
             take: limit
         })
 
-        const totalCount = await prisma.address.count()
+        const totalCount = await prisma.sale.count()
         const totalPage = Math.ceil(totalCount/ limit)
 
         return {
-            data: user,
+            data: sale,
             totalCount,
             totalPage,
             currentPage: page,
