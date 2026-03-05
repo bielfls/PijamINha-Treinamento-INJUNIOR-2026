@@ -19,7 +19,6 @@ export default function CartPage() {
 
     function backHome() {
         navigate("/");
-        setModalStep(null)
     }
 
     return(
@@ -69,7 +68,7 @@ export default function CartPage() {
                 </section>
 
                 {modalStep && (
-                    <Modal onClose={() => setModalStep(null)}>
+                    <Modal onClose={() => setModalStep(null)} atualModal={modalStep}>
                         {modalStep === "data" && (
                         <DataFormCart nextStep={() => proxStep("payment")} />
                         )}
