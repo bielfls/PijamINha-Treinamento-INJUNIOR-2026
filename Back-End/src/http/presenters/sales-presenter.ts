@@ -8,6 +8,7 @@ type HTTPSale = {
     priceTotal: number
     paymentMethod: string
     installments: number
+    quantityTotal: number
     address:{
         zipCode: string
         state: string
@@ -25,6 +26,10 @@ export class SalePresenter {
         if (Array.isArray(input)) {
             return input.map((p) => this.toHTTP(p))
         }
+
+        const quantityTotal = input.pajamas.reduce((item, pajama) => {
+            return item + pajama.quantity
+        }, 0)
         
         return {
             id: input.publicId,
@@ -33,6 +38,7 @@ export class SalePresenter {
             priceTotal: input.price,
             paymentMethod: input.paymentMethod,
             installments: input.installments,
+            quantityTotal: quantityTotal,
             address: {
                 zipCode: input.address.zipCode,
                 state: input.address.state,

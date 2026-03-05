@@ -35,98 +35,98 @@ interface CreateSaleUseCaseResponse {
 }
 
 export class CreateSaleUseCase {
-  constructor(
-    private saleRepository: SalesRepository,
-    private pajamaRepository: PajamasRepository,
-    private pajamaSizeRepository: PajamasSizeRepository,
-    private usersRepository: UsersRepository
-  ) {}
+    constructor(
+      private saleRepository: SalesRepository,
+      private pajamaRepository: PajamasRepository,
+      private pajamaSizeRepository: PajamasSizeRepository,
+      private usersRepository: UsersRepository
+    ) {}
 
-  async execute({
-    userId,
-    buyerName,
-    cpf,
-    paymentMethod,
-    installments,
-    cardNumber,
-    address: { zipCode, state, city, neighborhood, address, number },
-    pajamasBuy,
-  }: CreateSaleUseCaseRequest): Promise<CreateSaleUseCaseResponse> {
-
-    const user = await this.usersRepository.getUser({publicId: userId})
-
-    if(!user){
-        throw new ResourceNotFoundError()
-    }
-
-    const formatPajamas = await Promise.all(
-      pajamasBuy.map(async (pajama) => {
-        const foundPajama = await this.pajamaRepository.findById(
-          pajama.pajamasId,
-        )
-
-        if (!foundPajama) {
-          throw new ResourceNotFoundError()
-        }
-
-        const pajamaSize = await this.pajamaSizeRepository.findBy(
-          foundPajama.id,
-          pajama.size,
-        )
-
-        if (!pajamaSize) {
-          throw new ResourceNotFoundError()
-        }
-
-        if (pajamaSize.stockQuantity < pajama.quantity) {
-          throw new InsufficientStock()
-        }
-
-        await this.pajamaSizeRepository.decrementStock(
-          foundPajama.id,
-          pajama.size,
-          pajama.quantity,
-        )
-
-        return {
-          pajamasId: foundPajama.id,
-          price: (foundPajama.price * pajama.quantity),
-          quantity: pajama.quantity,
-        }
-      }),
-    )
-
-    const totalPrice = formatPajamas.reduce((sum, pajama) => sum + (pajama.price), 0)
-
-    const sale = await this.saleRepository.create({
-      user: {
-        connect: {
-          id: user.id
-        }
-      },
+    async execute({
+      userId,
       buyerName,
       cpf,
-      price: totalPrice,
       paymentMethod,
       installments,
       cardNumber,
-      address: {
-        create: {
-          zipCode,
-          state,
-          city,
-          neighborhood,
-          address,
-          number,
-        },
-      },
-      pajamas: {
-        createMany: {
-          data: formatPajamas,
-        },
-      },
-    })
+      address: { zipCode, state, city, neighborhood, address, number },
+      pajamasBuy,
+    }: CreateSaleUseCaseRequest): Promise<CreateSaleUseCaseResponse> {
 
-    return { sale }
+      const user = await this.usersRepository.getUser({publicId: userId})
+
+      if(!user){
+          throw new ResourceNotFoundError()
+      }
+
+      const formatPajamas = await Promise.all(
+        pajamasBuy.map(async (pajama) => {
+          const foundPajama = await this.pajamaRepository.findById(
+            pajama.pajamasId,
+          )
+
+          if (!foundPajama) {
+            throw new ResourceNotFoundError()
+          }
+
+          const pajamaSize = await this.pajamaSizeRepository.findBy(
+            foundPajama.id,
+            pajama.size,
+          )
+
+          if (!pajamaSize) {
+            throw new ResourceNotFoundError()
+          }
+
+          if (pajamaSize.stockQuantity < pajama.quantity) {
+            throw new InsufficientStock()
+          }
+
+          await this.pajamaSizeRepository.decrementStock(
+            foundPajama.id,
+            pajama.size,
+            pajama.quantity,
+          )
+
+          return {
+            pajamasId: foundPajama.id,
+            price: (foundPajama.price * pajama.quantity),
+            quantity: pajama.quantity,
+          }
+        }),
+      )
+
+      const totalPrice = formatPajamas.reduce((sum, pajama) => sum + (pajama.price), 0)
+
+      const sale = await this.saleRepository.create({
+        user: {
+          connect: {
+            id: user.id
+          }
+        },
+        buyerName,
+        cpf,
+        price: totalPrice,
+        paymentMethod,
+        installments,
+        cardNumber,
+        address: {
+          create: {
+            zipCode,
+            state,
+            city,
+            neighborhood,
+            address,
+            number,
+          },
+        },
+        pajamas: {
+          createMany: {
+            data: formatPajamas,
+          },
+        },
+      })
+
+      return { sale }
+    }
   }
-}

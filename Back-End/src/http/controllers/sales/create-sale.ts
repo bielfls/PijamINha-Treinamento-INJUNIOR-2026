@@ -19,7 +19,7 @@ export async function createSale(request: FastifyRequest, reply: FastifyReply){
             installments: z.coerce.number().max(6).default(1),
             cardNumber: z.string().min(13).max(19).optional(),
             address: z.object({
-                zipCode: z.string().length(8),
+                zipCode: z.string().min(8),
                 state: z.string().min(1),
                 city: z.string().min(1),
                 neighborhood: z.string().min(1),
@@ -74,7 +74,7 @@ export async function createSale(request: FastifyRequest, reply: FastifyReply){
 
         }catch(error){
             if(error instanceof InsufficientStock){
-                return reply.status(404).send({message: error.message})
+                return reply.status(400).send({message: error.message})
             }
 
             if(error instanceof ResourceNotFoundError){

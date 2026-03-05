@@ -60,4 +60,15 @@ export class SalesPrismaRepository implements SalesRepository{
             currentPage: page,
         }
     }
+
+    async update(id: number, data: Prisma.SaleUpdateInput){
+        return await prisma.sale.update({
+            where: {id},
+            data,
+            include: {
+                address: true,
+                pajamas: true
+            },
+        })
+    }
 }
