@@ -14,5 +14,5 @@ class ProductService extends baseService {
     }
 }
 
-
 export const productService = new ProductService(httpAdapter);
+
