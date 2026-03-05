@@ -1,13 +1,36 @@
 import styles from "./styles.module.css"
 import lupa from "../../assets/lupa.png"
 import { useState } from "react"
+import { useEffect } from "react"
+import {getPijamas} from "../../services/GETpijamas/productService"
+import ProductCard from "../../components/ProductCard/productCard"
 
-export function Catalog() {
+
+interface ProductCard{
+    id: string,
+    image:string,
+    name: string,
+    price: string,
+    parcela: string,
+}
+
+
+export function Catalog(props: ProductCard) {
     const [genre, setGenre] = useState<string>('');
     const [type, setType] = useState<string>('');
     const [season, setSeason] = useState<string>('');
-
     const [prod, setProd] = useState<string>('');
+
+    const[pijama, setPijama] = useState<ProductCard[]>([])
+    
+    useEffect (() =>{
+
+        getPijamas()
+        .then(data => setPijama(data))
+        .catch(error => console.error(error))
+
+    }, [props.price])
+
 
     function selectGenre(e: React.ChangeEvent<HTMLSelectElement>) {
         console.log(e.target.value);
@@ -84,9 +107,15 @@ export function Catalog() {
                 <section className={styles.pijamasSection}>
                     <ul className={styles.pijamasList}>
 
-                        {
-                            /* Espaço para Função Map com os ItemPijama */
-                        }
+                        {pijama.map(item => (
+                            <ProductCard
+                                id={item.id}
+                                name={item.name}
+                                image={item.image}
+                                price={item.price}
+                                parcela={item.parcela}
+                            />
+                        ))}
 
                         {/* Essas Divs são apenas Placeholders */}
 

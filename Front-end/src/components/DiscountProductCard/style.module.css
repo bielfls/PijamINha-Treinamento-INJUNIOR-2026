@@ -87,7 +87,7 @@
 }
 
 .buttonContainer label:hover{
-    transform: translateY(-10px);
+    transform: scale(1.2);
     background-color: transparent;
     background: none;
 }
