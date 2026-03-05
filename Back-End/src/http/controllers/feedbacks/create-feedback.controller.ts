@@ -8,7 +8,7 @@ export async function createFeedback(request: FastifyRequest, reply: FastifyRepl
         const createFeedbackBodySchema = z.object({
         name: z.string().trim().min(1),
         description: z.string().trim().min(1),
-        rating: z.number()
+        rating: z.coerce.number()
     })
 
     const { name, description, rating } = createFeedbackBodySchema.parse(request.body)
