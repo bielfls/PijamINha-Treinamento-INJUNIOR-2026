@@ -1,6 +1,6 @@
 import { httpAdapter } from "../lib/adapter";
 import { apiRoutes } from "../lib/config";
-import type { Feedback, FeedbackResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, User } from "../types/auth";
+import type {  FeedbackRequest, FeedbackResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, User } from "../types/auth";
 import type { HttpResponse } from "../types/http";
 import { baseService } from "./base-service"
 
@@ -26,8 +26,8 @@ class AuthService extends baseService {
             url: apiRoutes.ME
         })
     }
-    public async feedback(data:Feedback):Promise<HttpResponse<FeedbackResponse>>{
-        return this.execute<Feedback, FeedbackResponse>({
+    public async feedback(data:FeedbackRequest):Promise<HttpResponse<FeedbackResponse>>{
+        return this.execute<FeedbackRequest, FeedbackResponse>({
             data,
             method:"POST",
             url: apiRoutes.FEEDBACK
