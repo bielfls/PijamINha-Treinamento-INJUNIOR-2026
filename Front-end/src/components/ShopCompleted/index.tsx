@@ -1,12 +1,12 @@
 import whiteX from '../../assets/whiteX.png';
 import styles from './styles.module.css';
 
-export default function ShopCompleted() {
+export default function ShopCompleted({backHome}: {backHome: () => void}) {
 
     return (
         <div className={styles.shopCompleted}>
             <div className={styles.closeBtnDiv}>
-                <button>
+                <button onClick={backHome}>
                     <img src={whiteX} alt="Fechar" />
                 </button>
             </div>
