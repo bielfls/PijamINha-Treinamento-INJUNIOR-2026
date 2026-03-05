@@ -4,7 +4,7 @@ import type {  RegisterRequest, RegisterResponse } from "../types/auth";
 import { authService } from "../services/auth-service";
 
 
-export function useRegister(callbakcs?: { 
+export function useRegister(callbacks?: { 
     onSuccess?: (data:RegisterResponse) =>void 
     onError?: (error:Error) => void;
 
@@ -14,11 +14,12 @@ export function useRegister(callbakcs?: {
     const { data, error, isPending, isError, isSuccess, mutate, reset } = useMutation({
         mutationKey:["register"],
         
-        mutationFn: async(data:RegisterRequest)=>
-            
-            authService.register(data).then((res) => res.data),
-            onSuccess: callbakcs?.onSuccess,
-            onError:  callbakcs?.onError
+        mutationFn: async(data:RegisterRequest)=> {
+            const { confirmPassword, ...registerData } = data;
+            return authService.register(data).then((res) => res.data)
+        },
+            onSuccess: callbacks?.onSuccess,
+            onError:  callbacks?.onError
     
     })
 
@@ -31,4 +32,4 @@ export function useRegister(callbakcs?: {
         execute:mutate,
         reset,
     }
-}
+} 

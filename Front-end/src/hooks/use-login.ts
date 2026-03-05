@@ -5,7 +5,7 @@ import { authService } from "../services/auth-service";
 import { useAuthStore } from "../stores/auth";
 
 
-export function useLoign(callbakcs?: { 
+export function useLogin(callbakcs?: { 
     onSuccess?: (data:LoginResponse) =>void 
     onError?: (error:Error) => void;
 

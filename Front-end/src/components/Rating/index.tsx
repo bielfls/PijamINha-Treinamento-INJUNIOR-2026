@@ -3,9 +3,10 @@ import estrelaCheia from '../../assets/Cheia.svg'
 import meiaEstrela from '../../assets/Meia.svg'
 import style from './styles.module.css'
 import { useState, useRef } from 'react'
+import { useRatingStore } from '../../stores/star'
 
 export default function Stars(){
-    const [rating, setRating] = useState(0)
+    const { rating, setRating } = useRatingStore()
     const stars = [1,2,3,4,5]
     const starRefs = useRef<(HTMLButtonElement|null)[]>([])
 
