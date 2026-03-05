@@ -36,9 +36,9 @@ class AuthService extends baseService {
     public async getFeedbacks():Promise<HttpResponse<FeedbackResponse[]>>{
         return this.execute<void, FeedbackResponse[]>({
             method:"GET",
-            url: apiRoutes.FEEDBACK,
+            url: apiRoutes.FEEDBACKS,
             params:{
-                //parametro de nota minima que deve ter no documento das rotas de feeback qnd mandarem
+                min:"4"
             }
         })
     }
