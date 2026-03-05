@@ -1,9 +1,10 @@
 import type { AxiosInstance } from "axios";
+import { useAuthStore } from "../stores/auth";
 
 export function setupInterceptors(instance: AxiosInstance){
 
     instance.interceptors.request.use((config)=>{
-        const token = "quando tiver";
+        const token = useAuthStore.getState().token;
 
         if(token && config.headers) {
             config.headers.Authorization = `Bearer ${token}`
@@ -14,7 +15,7 @@ export function setupInterceptors(instance: AxiosInstance){
 
     instance.interceptors.response.use((error)=>{
         if(error.status === 401){
-            //fazer logout
+            useAuthStore.getState().setToken(undefined);
         }
 
         return Promise.reject((error));
