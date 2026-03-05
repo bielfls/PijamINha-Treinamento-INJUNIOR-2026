@@ -11,6 +11,7 @@ export interface ApiHookState<TPayload, TData>{
 }
 export type LoginState = ApiHookState<LoginRequest,LoginResponse>
 export type RegisterState = ApiHookState<RegisterRequest, RegisterResponse>
-export type FeedbackState = ApiHookState<FeedbackRequest, FeedbackResponse>
+export type GiveFeedbackState = ApiHookState<FeedbackRequest, FeedbackResponse>
+export type FeedbackState = ApiHookState<void, FeedbackResponse>
 export type ProfileState = ApiHookState<void, User>
 
