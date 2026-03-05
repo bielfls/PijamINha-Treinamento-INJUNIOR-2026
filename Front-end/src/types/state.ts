@@ -1,4 +1,4 @@
-import type { FeedbackRequest, FeedbackResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from "./auth";
+import type { FeedbackRequest, FeedbackResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, User } from "./auth";
 
 export interface ApiHookState<TPayload, TData>{
     data?:TData;
@@ -12,5 +12,5 @@ export interface ApiHookState<TPayload, TData>{
 export type LoginState = ApiHookState<LoginRequest,LoginResponse>
 export type RegisterState = ApiHookState<RegisterRequest, RegisterResponse>
 export type FeedbackState = ApiHookState<FeedbackRequest, FeedbackResponse>
-
+export type ProfileState = ApiHookState<void, User>
 
