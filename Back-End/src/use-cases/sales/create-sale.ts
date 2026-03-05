@@ -90,13 +90,13 @@ export class CreateSaleUseCase {
 
         return {
           pajamasId: foundPajama.id,
-          price: foundPajama.price,
+          price: (foundPajama.price * pajama.quantity),
           quantity: pajama.quantity,
         }
       }),
     )
 
-    const totalPrice = formatPajamas.reduce((sum, pajama) => sum + (pajama.price * pajama.quantity), 0)
+    const totalPrice = formatPajamas.reduce((sum, pajama) => sum + (pajama.price), 0)
 
     const sale = await this.saleRepository.create({
       user: {

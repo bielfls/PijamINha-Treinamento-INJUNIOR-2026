@@ -8,8 +8,9 @@ export class SalesPrismaRepository implements SalesRepository{
     async create(data: Prisma.SaleCreateInput){
         return await prisma.sale.create({
             data,
-            include:{
-                address: true
+            include: {
+                address: true,
+                pajamas: true
             },
         })
     }
@@ -18,7 +19,8 @@ export class SalesPrismaRepository implements SalesRepository{
         return await prisma.sale.findFirst({
             where,
             include: {
-                address: true
+                address: true,
+                pajamas: true,
             }
         })
     }
@@ -41,7 +43,8 @@ export class SalesPrismaRepository implements SalesRepository{
         const user = await prisma.sale.findMany({
             where,
             include: {
-                address: true
+                address: true,
+                pajamas: true,
             },
             skip,
             take: limit

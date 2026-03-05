@@ -1,4 +1,4 @@
-import type { Address, Prisma, Sale } from "@/@types/prisma/client.js";
+import type { Address, Prisma, Sale, SalePajamas } from "@/@types/prisma/client.js";
 
 interface ListSaleQuery {
     page?: number
@@ -6,10 +6,10 @@ interface ListSaleQuery {
     userId?: string
 }
 
-export type SaleWithRelation = Sale & { address: Address }
+export type SaleWithRelation = Sale & { address: Address } & {pajamas: SalePajamas[]}
 
 type ListSaleQueryResponse = {
-    data: SaleWithRelation[]
+    data: (SaleWithRelation)[]
     totalCount: number
     totalPage: number
     currentPage: number

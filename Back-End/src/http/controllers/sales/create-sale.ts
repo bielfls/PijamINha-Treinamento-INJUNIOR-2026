@@ -16,7 +16,7 @@ export async function createSale(request: FastifyRequest, reply: FastifyReply){
             buyerName: z.string().min(1).max(100),
             cpf: z.string().length(11),
             paymentMethod: z.enum(["PIX", "CARD", "BOLETO"]),
-            installments: z.coerce.number().default(1),
+            installments: z.coerce.number().max(6).default(1),
             cardNumber: z.string().min(13).max(19).optional(),
             address: z.object({
                 zipCode: z.string().length(8),

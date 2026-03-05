@@ -5,7 +5,7 @@ type HTTPSale = {
     id: string
     buyerName: string
     cpf: string
-    price: number
+    priceTotal: number
     paymentMethod: string
     installments: number
     address:{
@@ -19,8 +19,8 @@ type HTTPSale = {
 }
 
 export class SalePresenter {
-    static toHTTP(Sale: SaleWithRelation): HTTPSale
-    static toHTTP(Sales: SaleWithRelation[]): HTTPSale[]
+    static toHTTP(sale: SaleWithRelation): HTTPSale
+    static toHTTP(sales: SaleWithRelation[]): HTTPSale[]
     static toHTTP(input: SaleWithRelation | SaleWithRelation[]): HTTPSale | HTTPSale[] {
         if (Array.isArray(input)) {
             return input.map((p) => this.toHTTP(p))
@@ -30,7 +30,7 @@ export class SalePresenter {
             id: input.publicId,
             buyerName: input.buyerName,
             cpf: input.cpf,
-            price: input.price,
+            priceTotal: input.price,
             paymentMethod: input.paymentMethod,
             installments: input.installments,
             address: {
