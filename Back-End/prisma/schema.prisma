@@ -84,6 +84,7 @@ model SalePajamas {
 
   quantity Int
   price    Float
+  size     String
 
   saleId Int  @map("sale_id")
   sale   Sale @relation(fields: [saleId], references: [id], onDelete: Cascade)
@@ -91,7 +92,7 @@ model SalePajamas {
   pajamasId Int     @map("pajamas_id")
   pajamas   Pajamas @relation(fields: [pajamasId], references: [id])
 
-  @@unique([saleId, pajamasId]) //chave composta
+  @@unique([saleId, pajamasId, size]) //chave composta
   @@map("sale_pajamas")
 }
 

@@ -92,6 +92,7 @@ export class CreateSaleUseCase {
             pajamasId: foundPajama.id,
             price: (foundPajama.price * pajama.quantity),
             quantity: pajama.quantity,
+            size: pajama.size
           }
         }),
       )
