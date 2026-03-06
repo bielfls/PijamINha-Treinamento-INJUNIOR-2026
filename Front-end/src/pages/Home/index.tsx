@@ -70,11 +70,6 @@ const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProduc
     <p>Erro ao carregar produtos.</p>
   ) : (
     promoProducts?.map((pijama) => (
-      <Link 
-        to={`/product/${pijama.id}`} 
-        key={pijama.id} 
-        style={{ textDecoration: 'none', color: 'inherit' }}
-      >
      <DiscountProductCard 
       key={pijama.id} 
       id={pijama.id}
@@ -83,9 +78,7 @@ const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProduc
       price={Number(pijama.price)}
       onSale={pijama.onSale}
       salePercent={Number(pijama.salePercent)}
-      favorite={pijama.favorite}
     />
-      </Link>
     ))
   )}
   </div>
@@ -129,6 +122,5 @@ const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProduc
     </main>
   );
 }
-
 
 
