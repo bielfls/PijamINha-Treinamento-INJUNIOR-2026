@@ -1,7 +1,7 @@
 import styles from "./styles.module.css"
 import lupa from "../../assets/lupa.png"
 import { useState, useEffect } from "react"
-import { useCatalog } from "../../hooks/use-catalogojs"
+import { useCatalog } from "../../hooks/use-catalogo"
 import ProductCard from "../../components/ProductCard/productCard"
 import { useSearchParams } from "react-router-dom"
 import DiscountProductCard from "../../components/DiscountProductCard/discountProductCard"
@@ -13,7 +13,9 @@ interface ProductCard{
     name: string,
     price: number,
     parcela: string,
-    onSale: boolean
+    onSale: boolean,
+    favorite: boolean
+
 }
 
 interface DiscountProductCardProps{
@@ -23,6 +25,7 @@ interface DiscountProductCardProps{
     price: number
     onSale: boolean
     salePercent: number | null
+    favorite: boolean
 }
 
 
@@ -136,6 +139,7 @@ export function Catalog() {
                                         price={item.price}
                                         salePercent={item.parcela}
                                         onSale={item.onSale}
+                                        favorite={item.favorite}
                                     />
                                     
                                     : <ProductCard
@@ -144,6 +148,7 @@ export function Catalog() {
                                         image={item.image}
                                         price={item.price}
                                         parcela={item.parcela}
+                                        favorite={item.favorite}
                                       />
                         ))}
 

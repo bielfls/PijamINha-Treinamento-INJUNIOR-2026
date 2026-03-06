@@ -6,6 +6,8 @@ import {Link} from "react-router-dom"
 import discount from "../../assets/Desconto.svg"
 import linha from "../../assets/Line 10.svg"
 import backgroundImage from "../../assets/Front view of a young lady in pajamas staying in bed.png"
+import { useFavorite } from "../../hooks/use-favorite"
+
 
 
 interface DiscountProductCardProps{
@@ -15,14 +17,18 @@ interface DiscountProductCardProps{
     price: number
     onSale: boolean
     salePercent: number | null
+    favorite: boolean
 }
 
-export default function DiscountProductCard({name,price,onSale,salePercent}: DiscountProductCardProps){
+export default function DiscountProductCard({name,price,onSale,salePercent,id,favorite}: DiscountProductCardProps){
 
-    const[liked, setLiked] = useState(true);
+    const[liked, setLiked] = useState(favorite ?? false);
+    const{toggleFavorite} = useFavorite()
 
     function handleLike(){
-        setLiked(curtido => !curtido)
+        let stateCurtido = !liked
+        setLiked(stateCurtido)
+        toggleFavorite({id, favorite: stateCurtido})
     }
     const desconto = onSale && salePercent !== null;
     const precofinal = desconto ? price * (1 - (salePercent ?? 0) / 100) : price;

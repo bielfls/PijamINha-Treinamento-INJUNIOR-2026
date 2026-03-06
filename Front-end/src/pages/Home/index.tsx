@@ -82,6 +82,7 @@ const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProduc
         price={pijama.price}
         onSale={pijama.onSale}
         salePercent={pijama.salePercent}
+        favorite={pijama.favorite}
       />
       </Link>
     ))

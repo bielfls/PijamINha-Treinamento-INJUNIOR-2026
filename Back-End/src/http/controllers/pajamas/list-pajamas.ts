@@ -10,7 +10,7 @@ export async function listPajamas(request: FastifyRequest, reply: FastifyReply) 
         type: z.string().optional(),
         gender: z.string().optional(),
         page: z.coerce.number().int().positive().default(1),
-        limit: z.coerce.number().int().positive().max(50).default(5),
+        limit: z.coerce.number().int().positive().default(5),
     })
   
     const { name, season, type, gender, page, limit } = listPajamasSchema.parse(request.query)
