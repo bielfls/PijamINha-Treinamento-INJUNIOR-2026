@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./styles.module.css"
 import plusSymbol from "../../assets/Plus Math.png"
 import minusSymbol from "../../assets/Subtract.png"
@@ -81,7 +82,7 @@ export default function PijamaPage() {
                             </div>
 
                             <div className={styles.shopFavDiv}>
-                                <button className={styles.addCartBtn}>ADICIONAR AO CARRINHO</button>
+                                <Link to="/cartPage" className={styles.addCartBtn}>ADICIONAR AO CARRINHO</Link>
                                 
                                 {/* Ainda falta implementar a Troca de Imagens */}
 

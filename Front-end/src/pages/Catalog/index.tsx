@@ -126,41 +126,7 @@ export function Catalog(props: ProductCard) {
 
                         {/* Essas Divs são apenas Placeholders */}
 
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
 
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
 
                     </ul>
                     
