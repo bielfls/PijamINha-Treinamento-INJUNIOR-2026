@@ -1,4 +1,4 @@
-import styles from "./console.module.css";
+import styles from "./console.module.css"
 import Carousel from "../../components/Carrossel";
 import logo from "../../assets/logohome.png";
 import background from "../../assets/background.png";
@@ -7,12 +7,13 @@ import caminhao from "../../assets/truckicon.png";
 import pessoas from "../../assets/pessoasicon.png";
 import pijama from "../../assets/pijamaicon.png";
 import DiscountProductCard from "../../components/DiscountProductCard/discountProductCard";
-import pijama1 from "../../assets/pijama1.jpg";
 import { useRef } from "react";
 import FeedbackCard from "../../components/FeedbackCards";
 import setaesq from "../../assets/setaesq.png";
 import setadir from "../../assets/setadir.png";
 import { Link } from "react-router-dom";
+import { useGetPromoProducts } from "../../hooks/use-homepjs";
+
 
 export default function Home() {
 const feedbacks = [
@@ -35,6 +36,7 @@ const scroll = (direction: number) => {
     behavior: "smooth",
   });
 };
+const { data: promoProducts, isLoading, isError } = useGetPromoProducts();
 
   return (
     <main className={styles.container}>
@@ -67,13 +69,23 @@ const scroll = (direction: number) => {
 </section>
 <section className={styles.promos}>
   <img src={background2} alt="background" className={styles.feedbackBg} />
-  <p className={styles.promosTitle}>Nossas últimas promoções!</p>
   <div className={styles.products}>
-
-    <DiscountProductCard />
-    <DiscountProductCard />
-    <DiscountProductCard />
-
+  {isLoading ? (
+    <p>Carregando ofertas exclusivas...</p>
+  ) : isError ? (
+    <p>Erro ao carregar produtos.</p>
+  ) : (
+    promoProducts?.map((pijama) => (
+      <DiscountProductCard 
+        key={pijama.id} 
+        name={pijama.name}
+        image={pijama.image}
+        price={pijama.price}
+        onSale={pijama.onSale}
+        salePercent={pijama.salePercent}
+      />
+    ))
+  )}
   </div>
 </section>
 <section className={styles.feedbackSection}>
