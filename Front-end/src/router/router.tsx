@@ -21,7 +21,7 @@ const router = createBrowserRouter([
             {path: "login", element: <Login/>},
             {path: "register", element: <Registro/>},
             {path: "feedback", element: <Feedback/>},
-            {path: "pijamapage", element: <PijamaPage/>},
+            {path: "product/:id", element: <PijamaPage />},
             {path: "catalogo", element: <Catalog/>},
             {path: "cartPage", element: <RouterProtection allowedRoles={["Logged"]}><CartPage/></RouterProtection>},
             {path: "favoritos", element: <Favorites/>},

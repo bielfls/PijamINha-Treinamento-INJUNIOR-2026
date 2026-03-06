@@ -38,7 +38,7 @@ class AuthService extends baseService {
             method:"GET",
             url: apiRoutes.FEEDBACK,
             params:{
-                //parametro de nota minima que deve ter no documento das rotas de feeback qnd mandarem
+                min:"4"
             }
         })
     }

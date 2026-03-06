@@ -1,8 +1,26 @@
 import styles from './styles.module.css';
 import redCart from '../../assets/RedCart.png';
 import favSyboml from '../../assets/Favorito.svg';
+import { useState } from 'react';
+import Modal from '../../components/Modal';
+import DataFormCart from '../../components/DataFormCart';
+import PayFormCart from '../../components/PayFormCart';
+import ShopCompleted from '../../components/ShopCompleted';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function CartPage() {
+
+    const [modalStep, setModalStep] = useState<"data" | "payment" | "completed" | null>(null);
+    const navigate = useNavigate();
+
+    function proxStep(step: "data" | "payment" | "completed") {
+        setModalStep(step);
+    }
+
+    function backHome() {
+        navigate("/");
+    }
+
     return(
         <>
             <main>
@@ -14,15 +32,15 @@ export default function CartPage() {
                         
                         <h1 className={styles.cartTitle}>Carrinho</h1>
                     </div>
-
-                    <div className={styles.titleContainer}>
-                        <figure>
-                            <img src={favSyboml} alt="Símbolo de favorito" />
-                        </figure>
-                        
-                        <h1 className={styles.favTitle}>Favoritos</h1>
-                    </div>
-                
+                    <Link to="/favoritos">
+                        <div className={styles.titleContainer}>
+                            <figure>
+                                <img src={favSyboml} alt="Símbolo de favorito" />
+                            </figure>
+                            
+                            <h1 className={styles.favTitle}>Favoritos</h1>
+                        </div>
+                    </Link>
                 </section>
                 
                 <section className={styles.cartShop}>
@@ -41,11 +59,29 @@ export default function CartPage() {
                             <p>R$ 2.000,00</p>
                         </div>
                         
-                        <button className={styles.shopBtn}>COMPRE TUDO</button>
+                        <button className={styles.shopBtn} onClick={() => setModalStep("data")}>
+                            COMPRE TUDO
+                        </button>
 
                     </div>
 
                 </section>
+
+                {modalStep && (
+                    <Modal onClose={() => setModalStep(null)} atualModal={modalStep}>
+                        {modalStep === "data" && (
+                        <DataFormCart nextStep={() => proxStep("payment")} />
+                        )}
+
+                        {modalStep === "payment" && (
+                        <PayFormCart nextStep={() => proxStep("completed")} backStep={() => proxStep("data")} />
+                        )}
+
+                        {modalStep === "completed" && (
+                        <ShopCompleted backHome={() => backHome()} />
+                        )}
+                    </Modal>
+                )}
             
             </main>  
         </>

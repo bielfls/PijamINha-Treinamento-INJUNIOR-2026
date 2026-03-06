@@ -2,6 +2,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import z from 'zod'
 import { makeGetFeedbackUseCase } from '@/use-cases/factories/feedbacks/make-get-feedback.js'
 import { FeedbackPresenter } from '@/http/presenters/feedbacks-presenter.js'
+import { ResourceNotFoundError } from '@/use-cases/errors/resourse-not-found-error.js'
 
 export async function getFeedback(request: FastifyRequest, reply: FastifyReply) {
     try {
@@ -17,6 +18,11 @@ export async function getFeedback(request: FastifyRequest, reply: FastifyReply) 
         })
         return reply.status(200).send(FeedbackPresenter.toHTTP(feedback))
     } catch (error) {
+        if (error instanceof ResourceNotFoundError) {
+            return reply.status(404).send({
+                message: error.message
+            })
+        }
         throw new Error()
     }
 }

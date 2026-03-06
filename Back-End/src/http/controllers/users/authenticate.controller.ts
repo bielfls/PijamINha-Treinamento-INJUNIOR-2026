@@ -8,16 +8,16 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
     try {
         const registerBodySchema = z.object({
             email: z.email().trim().min(1),
-            senha: z.string().min(8).max(16),
+            password: z.string().min(8).max(16),
         })
 
-        const { email, senha } = registerBodySchema.parse(request.body)
+        const { email, password } = registerBodySchema.parse(request.body)
 
         const authenticateUseCase = makeAuthenticateUseCase()
 
         const { user } = await authenticateUseCase.execute({
             login: email,
-            password: senha,
+            password: password,
         })
 
         const token = await reply.jwtSign(

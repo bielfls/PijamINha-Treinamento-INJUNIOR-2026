@@ -7,7 +7,16 @@
     flex-direction: column;
     box-shadow: 12px 12px 12px #00000040;
     background-color: transparent;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1;
 }
+
+.cardContainer:hover{
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
 
 .imgContainer{
     width: 408px;
@@ -31,10 +40,22 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 1rem;
+    top: 2rem;
     left: 1rem;
-
 }
+
+.buttonContainer label{
+    transition: transform 0.3s ease;
+    background-color: transparent;
+    background: none;
+}
+
+.buttonContainer label:hover{
+    transform: scale(1.2);
+    background-color: transparent;
+    background: none;
+}
+
 
 .infoContainer{
     width: 100%;

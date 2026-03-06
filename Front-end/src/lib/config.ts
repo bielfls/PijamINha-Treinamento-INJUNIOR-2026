@@ -1,6 +1,8 @@
 export const apiRoutes = {
-    LOGIN: "/users/sessions", // rotas dos caras que eles vao mandar no documento 
-    REGISTER: "/users/register",
-    ME: "/users/me",
-    FEEDBACK:"/users/feedback"
+    LOGIN: "/users/authenticate", // rotas dos caras que eles vao mandar no documento 
+    REGISTER: "/users/",
+    ME: "/users/:publicId",
+    FEEDBACK:"/feedbacks/",
+    FEEDBACKS:"/feedbacks/:publicId",
+    PRODUCTSHOME: "/pajamas/"
 }

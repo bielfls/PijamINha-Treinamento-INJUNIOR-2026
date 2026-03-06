@@ -1,17 +1,58 @@
 import styles from "./styles.module.css"
 import lupa from "../../assets/lupa.png"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useCatalog } from "../../hooks/use-catalogojs"
+import ProductCard from "../../components/ProductCard/productCard"
+import { useSearchParams } from "react-router-dom"
+import DiscountProductCard from "../../components/DiscountProductCard/discountProductCard"
+
+
+interface ProductCard{
+    id: string,
+    image:string,
+    name: string,
+    price: number,
+    parcela: string,
+    onSale: boolean
+}
+
+interface DiscountProductCardProps{
+    id: string
+    name: string
+    image: string
+    price: number
+    onSale: boolean
+    salePercent: number | null
+}
+
+
 
 export function Catalog() {
-    const [genre, setGenre] = useState<string>('');
-    const [type, setType] = useState<string>('');
-    const [season, setSeason] = useState<string>('');
+    const[searchParams] = useSearchParams()
+    const [gender, setGender] = useState<string>(searchParams.get("gender")|| "Gênero");
+    const [type, setType] = useState<string>(searchParams.get("type") || "Tipo");
+    const [season, setSeason] = useState<string>(searchParams.get("season") || "Estação");
+    const[searchName, setSearchName] = useState<string>("")
+    const [prod, setProd] = useState<string>("");
+    const{data: pijama, isPending, isError} = useCatalog(
+        gender !== "Gênero" ? gender : undefined,
+        type !== "Tipo" ? type : undefined,
+        season !== "Estação" ? season : undefined
 
-    const [prod, setProd] = useState<string>('');
+    )
+    
 
-    function selectGenre(e: React.ChangeEvent<HTMLSelectElement>) {
+
+    useEffect(() => {
+        setGender(searchParams.get("gender") || "Gênero" )
+        setType(searchParams.get("type") || "Tipo")
+        setSeason(searchParams.get("season") || "Estação")
+    },[searchParams])
+
+
+    function selectGender(e: React.ChangeEvent<HTMLSelectElement>) {
         console.log(e.target.value);
-        setGenre(e.target.value);
+        setGender(e.target.value);
     }
 
     function selectType(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -31,7 +72,7 @@ export function Catalog() {
     return (
 
         <>
-            <main>
+            <main style={{border: "none"}}>
                 <form className={styles.searchForm} >
                     <div className={styles.searchBar}>
                         
@@ -48,9 +89,9 @@ export function Catalog() {
                         
                         <div className={styles.filter}>
                             <span></span>
-                            <select name="Gênero" value={genre} onChange={selectGenre}>
-                                <option value="" disabled hidden defaultValue={""}>Gênero</option>
-                                <option value="Todos">Todos</option>
+                            <select name="Gênero" value={gender} onChange={selectGender}>
+                                <option value="Gênero" disabled hidden defaultValue={""}>Gênero</option>
+                                <option value="">Todos</option>
                                 <option value="Unissex">Unissex</option>
                                 <option value="Masculino">Masculino</option>
                                 <option value="Feminino">Feminino</option>
@@ -61,8 +102,8 @@ export function Catalog() {
                         <div className={styles.filter}>
                             <span></span>
                             <select name="Tipo" value={type} onChange={selectType}>
-                                <option value="" disabled hidden defaultValue={""}>Tipo</option>
-                                <option value="Todos">Todos</option>
+                                <option value="Tipo" disabled hidden defaultValue={""}>Tipo</option>
+                                <option value="">Todos</option>
                                 <option value="Adulto">Adulto</option>
                                 <option value="Infantil">Infantil</option>
                             </select>
@@ -71,8 +112,8 @@ export function Catalog() {
                         <div className={styles.filter}>
                             <span></span>
                             <select name="Estação" value={season} onChange={selectSeason}>
-                                <option value="" disabled hidden defaultValue={""}>Estação</option>
-                                <option value="Todos">Todos</option>
+                                <option value="Estação" disabled hidden defaultValue={""}>Estação</option>
+                                <option value="">Todos</option>
                                 <option value="Verão">Verão</option>
                                 <option value="Inverno">Inverno</option>
                             </select>
@@ -82,49 +123,32 @@ export function Catalog() {
                                 
                 </form>
                 <section className={styles.pijamasSection}>
+                    {isPending && <p>Carregando...</p>}
+                    {isError && <p>Erro ao carregar catálogo.</p>}
                     <ul className={styles.pijamasList}>
 
-                        {
-                            /* Espaço para Função Map com os ItemPijama */
-                        }
+                        {pijama?.map(item => (
+                            item.onSale
+                                   ?<DiscountProductCard
+                                        id={item.id}
+                                        name={item.name}
+                                        image={item.image}
+                                        price={item.price}
+                                        salePercent={item.parcela}
+                                        onSale={item.onSale}
+                                    />
+                                    
+                                    : <ProductCard
+                                        id={item.id}
+                                        name={item.name}
+                                        image={item.image}
+                                        price={item.price}
+                                        parcela={item.parcela}
+                                      />
+                                    
 
-                        {/* Essas Divs são apenas Placeholders */}
+                        ))}
 
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
 
                     </ul>
                     

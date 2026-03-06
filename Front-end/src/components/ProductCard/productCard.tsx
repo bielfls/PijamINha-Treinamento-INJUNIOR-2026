@@ -6,32 +6,43 @@ import { useState } from "react"
 import "./style.module.css"
 
 
-
 interface ProductCard{
-    id: number,
+    id: string,
     image:string,
     name: string,
-    price: string,
+    price: number,
     parcela: string,
 }
 
 
 
 
-export default function ProductCard(){
+export default function ProductCard(props: ProductCard){
 
     const[liked, setLiked] = useState(true);
 
+    function formatPrice(price:number) : string{
+        return price.toFixed(2).replace(".", ",")
+    }
+
+    function calculoParcela(price: number) : string{
+        return (price/6).toFixed(2).replace(".", ",")
+    }
+    
     function handleLike(){
         setLiked(curtido => !curtido)
-        console.log("liked!")
     }
+
+    function addFavorito(){
+        
+    }
+
 
 
     return(
         <div className={style.cardContainer}>
             <div className={style.imgContainer}>
-                <img src={backgroundImage} alt="" />
+                <img src={backgroundImage} alt="Modelo vestindo o pijama" />
                 <div className={style.buttonContainer}>
                     <label style={{cursor: "pointer"}}>
                         <input
@@ -45,11 +56,11 @@ export default function ProductCard(){
                 </div>
             </div>
             <div className={style.infoContainer}>
-                <p style={{color: "#3E677A", fontSize: "24px", fontWeight: "400" }}>PIJAMA FEMININO LONGO - ESTAMPA POÁ</p>
-                <h1 style={{marginTop: "1rem", color: "#274553", fontSize: "40px", fontWeight: "700"}}>R$ 78,90</h1>
+                <p style={{color: "#3E677A", fontSize: "24px", fontWeight: "400" }}>{props.name}</p>
+                <h1 style={{marginTop: "1rem", color: "#274553", fontSize: "40px", fontWeight: "700"}}>{"R$ " + formatPrice(props.price)}</h1>
                 <div className={style.parcelaContainer}>
                     <p style={{color: "#274553", fontSize: "16px", fontWeight: "400"}}>6x de </p>
-                    <p style={{color: "#274553", fontSize: "16px", fontWeight: "800", fontStyle: "ExtraBold"}}>R$13,50</p>
+                    <p style={{color: "#274553", fontSize: "16px", fontWeight: "800", fontStyle: "ExtraBold"}}>{"R$ " + calculoParcela(props.price)}</p>
                 </div>
             </div>
         </div>

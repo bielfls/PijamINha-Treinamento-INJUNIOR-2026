@@ -157,6 +157,7 @@
   overflow-x: auto;
   scroll-behavior: smooth;
   scrollbar-width: none;
+  padding: 2rem;
 }
 
 .feedbackTrack::-webkit-scrollbar {
@@ -197,6 +198,8 @@
   z-index: 1;
 }
 
+
+
 .feedbackLink {
   background-color: var(--blue-200);
   color:var(--white);
@@ -206,8 +209,15 @@
   padding: 16px 48px;
   cursor: pointer;
   text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
 }
 
+.feedbackLink:hover{
+  transform: scale(1.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
 
 .feedbackBg {
   position: absolute;

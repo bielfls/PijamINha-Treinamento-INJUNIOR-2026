@@ -1,4 +1,4 @@
-import styles from "./console.module.css";
+import styles from "./console.module.css"
 import Carousel from "../../components/Carrossel";
 import logo from "../../assets/logohome.png";
 import background from "../../assets/background.png";
@@ -7,34 +7,29 @@ import caminhao from "../../assets/truckicon.png";
 import pessoas from "../../assets/pessoasicon.png";
 import pijama from "../../assets/pijamaicon.png";
 import DiscountProductCard from "../../components/DiscountProductCard/discountProductCard";
-import pijama1 from "../../assets/pijama1.jpg";
 import { useRef } from "react";
 import FeedbackCard from "../../components/FeedbackCards";
 import setaesq from "../../assets/setaesq.png";
 import setadir from "../../assets/setadir.png";
 import { Link } from "react-router-dom";
+import { useGetPromoProducts } from "../../hooks/use-homepjs";
+import { useGetFeedbacks } from "../../hooks/use-feedbackshome";
+
 
 export default function Home() {
-const feedbacks = [
-  { id: 1, name: "Fulano da Silva", rating: 4, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-  { id: 2, name: "Beltrano Souza", rating: 4, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-  { id: 3, name: "Ciclano Mendes", rating: 5, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-  { id: 4, name: "Ana Paula", rating: 5, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-  { id: 5, name: "Carlos Eduardo", rating: 3, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-  { id: 6, name: "Mariana Lima", rating: 5, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-];
-
+const { data: feedbackData, isPending: isFeedbackLoading, isError: isFeedbackError} = useGetFeedbacks();
 const feedbackRef = useRef<HTMLDivElement>(null);
 
 const scroll = (direction: number) => {
   if (!feedbackRef.current) return;
 
-  const scrollAmount = 1500; // valor fixo para garantir 3 cards rolando
+  const scrollAmount = 1300; // valor fixo para garantir 3 cards rolando
   feedbackRef.current.scrollBy({
     left: scrollAmount * direction,
     behavior: "smooth",
   });
 };
+const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProducts();
 
   return (
     <main className={styles.container}>
@@ -67,13 +62,30 @@ const scroll = (direction: number) => {
 </section>
 <section className={styles.promos}>
   <img src={background2} alt="background" className={styles.feedbackBg} />
-  <p className={styles.promosTitle}>Nossas últimas promoções!</p>
   <div className={styles.products}>
-
-    <DiscountProductCard />
-    <DiscountProductCard />
-    <DiscountProductCard />
-
+  {isLoading ? (
+    <p>Carregando ofertas exclusivas...</p>
+  ) : isError ? (
+    <p>Erro ao carregar produtos.</p>
+  ) : (
+    promoProducts?.map((pijama) => (
+      <Link 
+        to={`/product/${pijama.id}`} 
+        key={pijama.id} 
+        style={{ textDecoration: 'none', color: 'inherit' }}
+      >
+      <DiscountProductCard 
+        key={pijama.id} 
+        id={pijama.id}
+        name={pijama.name}
+        image={pijama.image}
+        price={pijama.price}
+        onSale={pijama.onSale}
+        salePercent={pijama.salePercent}
+      />
+      </Link>
+    ))
+  )}
   </div>
 </section>
 <section className={styles.feedbackSection}>
@@ -81,11 +93,20 @@ const scroll = (direction: number) => {
         <p className={styles.textoFeed}>Feedbacks</p>
         <div className={styles.feedbackContainer}> 
           <div className={styles.feedbackTrack} ref={feedbackRef}>
-            {feedbacks.map((f) => (
-              <FeedbackCard key={f.id} name={f.name} rating={f.rating} comment={f.comment} />
-            ))}
-          </div>
-
+  {isFeedbackLoading ? (
+    <p>Carregando depoimentos...</p>
+  ) : isFeedbackError ? (
+    <p>Não foi possível carregar os feedbacks.</p>
+  ) : (
+    feedbackData.map((f) => (
+      <FeedbackCard 
+        name={f.name} 
+        rating={f.rating} 
+        description={f.description}
+      />
+    ))
+  )}
+</div>
         <button
             className={`${styles.feedbackArrow} ${styles.feedbackLeft}`}
             onClick={() => scroll(-1)}
@@ -100,9 +121,10 @@ const scroll = (direction: number) => {
         </button>
  </div> 
     <div className={styles.feedbackBtn}>
-        <Link to="#" className={styles.feedbackLink}>Também quero dar um feedback!</Link>
+        <Link to="feedback" className={styles.feedbackLink}>Também quero dar um feedback!</Link>
 </div>
       </section>
     </main>
   );
 }
+
