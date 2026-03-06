@@ -79,7 +79,7 @@ const { data: promoProducts, isLoading, isError } = useGetPromoProducts();
       <Link 
         to={`/product/${pijama.id}`} 
         key={pijama.id} 
-        style={{ textDecoration: 'none', color: 'inherit' }} // Remove o estilo padrão de link azul/sublinhado
+        style={{ textDecoration: 'none', color: 'inherit' }}
       >
       <DiscountProductCard 
         key={pijama.id} 
@@ -125,3 +125,4 @@ const { data: promoProducts, isLoading, isError } = useGetPromoProducts();
     </main>
   );
 }
+
