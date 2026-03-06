@@ -11,7 +11,10 @@ app.register(fastifyJwt, {
     secret: env.JWT_SECRET,
 })
 
-app.register(cors)
+app.register(cors, {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PATCH", "DELETE", "PUT"]
+})
 
 app.register(appRoutes)
 

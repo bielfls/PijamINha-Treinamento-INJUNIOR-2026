@@ -62,6 +62,7 @@ const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProduc
 </section>
 <section className={styles.promos}>
   <img src={background2} alt="background" className={styles.feedbackBg} />
+  <p className={styles.promosTitle}>Nossas últimas promoções!</p>
   <div className={styles.products}>
   {isLoading ? (
     <p>Carregando ofertas exclusivas...</p>
@@ -69,11 +70,6 @@ const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProduc
     <p>Erro ao carregar produtos.</p>
   ) : (
     promoProducts?.map((pijama) => (
-      <Link 
-        to={`/product/${pijama.id}`} 
-        key={pijama.id} 
-        style={{ textDecoration: 'none', color: 'inherit' }}
-      >
      <DiscountProductCard 
       key={pijama.id} 
       id={pijama.id}
@@ -83,7 +79,6 @@ const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProduc
       onSale={pijama.onSale}
       salePercent={Number(pijama.salePercent)}
     />
-      </Link>
     ))
   )}
   </div>

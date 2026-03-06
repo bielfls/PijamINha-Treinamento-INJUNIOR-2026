@@ -33,7 +33,7 @@ class ProductService extends baseService {
 
     // Para a Home, com os produtos em promoção (onSale = true)
    
-public async getPromoPajamas(limit: number = 3): Promise<HttpResponse<GetPajamasResponse>> {
+public async getPromoPajamas(limit: number = 30): Promise<HttpResponse<GetPajamasResponse>> {
     return this.execute<void, GetPajamasResponse>({
         method: "GET",
         url: apiRoutes.PRODUCTSHOME,
@@ -43,6 +43,36 @@ public async getPromoPajamas(limit: number = 3): Promise<HttpResponse<GetPajamas
         }
     });
 }
+
+public async toggleFavorite(id: string, favorite: boolean): Promise<HttpResponse<Pijama>>{
+    return this.execute<{favorite: boolean}, Pijama>({
+        method: "PUT",
+        url: `${apiRoutes.PRODUCTSHOME}${id}`,
+        data: {favorite}
+    })
+}
+
+
+public async getFavPajamas(): Promise<HttpResponse<GetPajamasResponse>> {
+        return this.execute<void, GetPajamasResponse>({
+            method: "GET",
+            url: apiRoutes.PRODUCTSHOME,
+            params: {
+                favorite: "true",
+                limit: "10000"
+            }
+        });
+    }
+
+public async removeFavPajamas(id: string): Promise<HttpResponse<Pijama>>{
+    return this.execute<void, Pijama>({
+        method: "DELETE",
+        url: `${apiRoutes.PRODUCTSHOME}${id}`
+
+    });
+}
+
+
 }
 
 export const productService = new ProductService(httpAdapter);
