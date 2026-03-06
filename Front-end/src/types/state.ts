@@ -17,4 +17,4 @@ export type GiveFeedbackState = ApiHookState<FeedbackRequest, FeedbackResponse>
 export type FeedbackState = ApiHookState<void, FeedbackResponse>
 export type ProfileState = ApiHookState<void, User>
 export type PajamasState = ApiHookState<void, Pijama[]>
-
+export type IdPajamaState = ApiHookState<string,Pijama>;
