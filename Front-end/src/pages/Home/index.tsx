@@ -74,16 +74,16 @@ const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProduc
         key={pijama.id} 
         style={{ textDecoration: 'none', color: 'inherit' }}
       >
-      <DiscountProductCard 
-        key={pijama.id} 
-        id={pijama.id}
-        name={pijama.name}
-        image={pijama.image}
-        price={pijama.price}
-        onSale={pijama.onSale}
-        salePercent={pijama.salePercent}
-        favorite={pijama.favorite}
-      />
+     <DiscountProductCard 
+      key={pijama.id} 
+      id={pijama.id}
+      name={pijama.name}
+      image={pijama.image}
+      price={Number(pijama.price)}
+      onSale={pijama.onSale}
+      salePercent={Number(pijama.salePercent)}
+      favorite={pijama.favorite}
+    />
       </Link>
     ))
   )}
@@ -128,4 +128,5 @@ const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProduc
     </main>
   );
 }
+
 

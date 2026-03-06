@@ -82,22 +82,24 @@ export class CreateSaleUseCase {
             throw new InsufficientStock()
           }
 
-          await this.pajamaSizeRepository.decrementStock(
-            foundPajama.id,
-            pajama.size,
-            pajama.quantity,
-          )
-
           return {
             pajamasId: foundPajama.id,
-            price: (foundPajama.price * pajama.quantity),
+            price: foundPajama.price,
             quantity: pajama.quantity,
             size: pajama.size
           }
         }),
       )
 
-      const totalPrice = formatPajamas.reduce((sum, pajama) => sum + (pajama.price), 0)
+      for( const pajama of formatPajamas){
+        await this.pajamaSizeRepository.decrementStock(
+            pajama.pajamasId,
+            pajama.size,
+            pajama.quantity,
+          )
+      }
+
+      const totalPrice = formatPajamas.reduce((sum, pajama) => sum + (pajama.price * pajama.quantity), 0)
 
       const sale = await this.saleRepository.create({
         user: {

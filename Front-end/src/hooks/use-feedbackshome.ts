@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { authService } from '../services/auth-service';
 import type { FeedbackResponse } from '../types/auth';
+import { useMemo } from 'react';
 
 export interface FeedbackState {
     data: FeedbackResponse[];
@@ -20,12 +21,13 @@ export function useGetFeedbacks(): FeedbackState {
         }
     });
 
-    return {
+    return useMemo(() => ({
         data: data ?? [],
         error: error ?? undefined,
         isPending,
         isError,
         isSuccess,
         execute: () => { refetch() }
-    };
+    }), [data, error, isError, isPending, isSuccess, refetch]);
+
 }
