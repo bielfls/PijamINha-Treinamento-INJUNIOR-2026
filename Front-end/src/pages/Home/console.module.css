@@ -157,6 +157,7 @@
   overflow-x: auto;
   scroll-behavior: smooth;
   scrollbar-width: none;
+  padding: 2rem;
 }
 
 .feedbackTrack::-webkit-scrollbar {

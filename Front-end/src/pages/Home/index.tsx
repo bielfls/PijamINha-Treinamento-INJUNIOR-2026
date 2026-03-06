@@ -30,7 +30,7 @@ const feedbackRef = useRef<HTMLDivElement>(null);
 const scroll = (direction: number) => {
   if (!feedbackRef.current) return;
 
-  const scrollAmount = 1500; // valor fixo para garantir 3 cards rolando
+  const scrollAmount = 1300; // valor fixo para garantir 3 cards rolando
   feedbackRef.current.scrollBy({
     left: scrollAmount * direction,
     behavior: "smooth",
