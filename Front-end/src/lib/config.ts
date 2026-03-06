@@ -3,6 +3,6 @@ export const apiRoutes = {
     REGISTER: "/users/",
     ME: "/users/:publicId",
     FEEDBACK:"/feedbacks/",
-    FEEDBACKS:"/feedbacks/:publicId"
+    FEEDBACKS:"/feedbacks/:publicId",
     PRODUCTSHOME: "/pajamas/"
 }
