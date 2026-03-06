@@ -7,7 +7,7 @@ import { listPajamas } from "./list-pajamas.js";
 
 export async function pajamasRoutes(app: FastifyInstance) {
     app.post('/', createPajama)
-    app.put('/:publicId', updatePajamaStock)
+    app.patch('/:publicId', updatePajamaStock)
     app.delete('/:publicId', deletePajama)
     app.get('/:publicId', getPajamaById)
     app.get('/', listPajamas)

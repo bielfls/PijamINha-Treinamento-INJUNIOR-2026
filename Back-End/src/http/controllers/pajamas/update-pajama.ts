@@ -9,18 +9,20 @@ export async function updatePajamaStock(request: FastifyRequest, reply: FastifyR
   })
 
   const updatePajamaBodySchema = z.object({
-      size: z.string().min(1),
-      quantity: z.number()
+      favorite: z.boolean().optional(),
+      size: z.string().min(1).optional(),
+      quantity: z.number().optional()
   })
 
   const { publicId } = updateParamsSchema.parse(request.params)
-  const { size, quantity } = updatePajamaBodySchema.parse(request.body)
+  const { favorite, size, quantity } = updatePajamaBodySchema.parse(request.body)
 
   try {
     const updatePajamaUseCase = makeUpdatePajamaUseCase()
 
     await updatePajamaUseCase.execute({
       pajamaId: publicId,
+      favorite,
       size,
       quantity
     })
