@@ -5,13 +5,15 @@ import type { PajamasState } from "../types/state";
 export function useGetPromoProducts(): PajamasState {
 
     const { data, error, isError, isPending, isSuccess, refetch } = useQuery({
-        queryKey: ["profile"],
-        queryFn: async () => productService.getPromoPajamas(3).then((res) => res.data)
-    })
-
+        queryKey: ["promo-pjs"],
+        queryFn: async () => {
+            const res = await productService.getPromoPajamas(3);
+            return Array.isArray(res.data?.pajamas) ? res.data.pajamas : [];
+        }
+    });
 
     return {
-        data,
+        data: data ?? [],
         error: error ?? undefined,
         isPending,
         isError,
