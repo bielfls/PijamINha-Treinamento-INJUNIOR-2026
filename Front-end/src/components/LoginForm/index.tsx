@@ -16,7 +16,7 @@ export const userSchema = z.object({
 export default function LoginForm(){
     const [vision,setVision] = useState(false);
     const navigate = useNavigate()
-    const { execute: enterUser, error, isPending } = useLogin({
+    const { execute: enterUser, error, isPending, isError } = useLogin({
             onSuccess: () => {
                 localStorage.setItem("isAuthenticated", "true")
                 localStorage.setItem("userRole", "Logged")
@@ -35,6 +35,28 @@ export default function LoginForm(){
         })
         
         const onSubmit = (data: LoginRequest) => enterUser(data);
+        
+    let errorMessage = "Erro ao realizar login"; // Mensagem padrão
+
+    if (isError && error) {
+    const backendMessage = (error as any).message;
+
+    switch (backendMessage) {
+      
+        case "Dados de registro inválidos!": 
+            errorMessage = "Usuário não encontrado, cadastre-se primeiro.";
+            break;
+            
+        case "Credenciais não batem":
+            errorMessage = "Usuário ou senha incorretos. Tente novamente.";
+            break;
+
+        default:
+           
+            errorMessage = backendMessage || "Erro ao realizar login";
+            break;
+    }
+}
 
        
     
@@ -74,7 +96,7 @@ export default function LoginForm(){
                     
                     <button disabled={isPending}className={style.enter}>{isPending? 'Entrando...':'Entrar'}
                     </button>
-                    {errors.root && <span className={style.error}>{errors.root.message}</span>}
+                    {isError && <span className={style.error}>{errorMessage}</span>}
 
                     <div className={style.line}> </div>
                     

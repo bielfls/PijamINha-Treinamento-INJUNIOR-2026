@@ -148,6 +148,10 @@ export function Catalog() {
                         ))}
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> a94b5868ba7c616a2da9205bc4e0f23ee97a981c
                     </ul>
                     
                     {/* Possível Componente */}
