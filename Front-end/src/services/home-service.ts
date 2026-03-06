@@ -33,7 +33,7 @@ class ProductService extends baseService {
 
     // Para a Home, com os produtos em promoção (onSale = true)
    
-public async getPromoPajamas(limit: number = 3): Promise<HttpResponse<GetPajamasResponse>> {
+public async getPromoPajamas(limit: number = 30): Promise<HttpResponse<GetPajamasResponse>> {
     return this.execute<void, GetPajamasResponse>({
         method: "GET",
         url: apiRoutes.PRODUCTSHOME,
