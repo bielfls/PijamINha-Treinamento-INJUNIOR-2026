@@ -9,7 +9,7 @@ export async function createUser(request: FastifyRequest, reply: FastifyReply) {
     try {
         const registerBodySchema = z.object({
             name: z.string().trim().min(1).max(32),
-            username: z.string().trim().min(8).max(32),
+            username: z.string().trim().min(4).max(32),
             email: z.email().trim(),
             password: z.string().min(6).max(16),
         })
