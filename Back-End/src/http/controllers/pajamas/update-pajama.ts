@@ -2,6 +2,7 @@ import type { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 import { ResourceNotFoundError } from '@/use-cases/errors/resourse-not-found-error.js'
 import { makeUpdatePajamaUseCase } from '@/use-cases/factories/pajamas/make-update-pajama.js'
+import { PajamaPresenter } from '@/http/presenters/pajamas-presenter.js'
 
 export async function updatePajamaStock(request: FastifyRequest, reply: FastifyReply) {
   const updateParamsSchema = z.object({
@@ -20,14 +21,14 @@ export async function updatePajamaStock(request: FastifyRequest, reply: FastifyR
   try {
     const updatePajamaUseCase = makeUpdatePajamaUseCase()
 
-    await updatePajamaUseCase.execute({
+     const { pajamas } = await updatePajamaUseCase.execute({
       pajamaId: publicId,
       favorite,
       size,
       quantity
     })
 
-    return reply.status(204).send()
+    return reply.status(200).send(PajamaPresenter.toHTTP(pajamas))
 
   } catch (error) {
       if(error instanceof ResourceNotFoundError) {
