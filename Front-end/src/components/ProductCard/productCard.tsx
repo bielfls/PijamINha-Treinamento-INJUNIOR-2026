@@ -2,7 +2,7 @@ import style from "./style.module.css"
 import likeon from "../../assets/Favorito.svg"
 import likeoff from "../../assets/Favoritado.svg"
 import backgroundImage from "../../assets/Front view of a young lady in pajamas staying in bed.png"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./style.module.css"
 
 
@@ -21,6 +21,7 @@ export default function ProductCard(props: ProductCard){
 
     const[liked, setLiked] = useState(true);
 
+
     function formatPrice(price:number) : string{
         return price.toFixed(2).replace(".", ",")
     }
@@ -33,11 +34,10 @@ export default function ProductCard(props: ProductCard){
         setLiked(curtido => !curtido)
     }
 
-    function addFavorito(){
-        
+    function addFavorito(id: string){
     }
 
-
+   
 
     return(
         <div className={style.cardContainer}>

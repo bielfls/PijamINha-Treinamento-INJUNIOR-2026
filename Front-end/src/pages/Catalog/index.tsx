@@ -32,15 +32,17 @@ export function Catalog() {
     const [gender, setGender] = useState<string>(searchParams.get("gender")|| "Gênero");
     const [type, setType] = useState<string>(searchParams.get("type") || "Tipo");
     const [season, setSeason] = useState<string>(searchParams.get("season") || "Estação");
-    const[searchName, setSearchName] = useState<string>("")
     const [prod, setProd] = useState<string>("");
     const{data: pijama, isPending, isError} = useCatalog(
         gender !== "Gênero" ? gender : undefined,
         type !== "Tipo" ? type : undefined,
-        season !== "Estação" ? season : undefined
-
+        season !== "Estação" ? season : undefined,
+        prod !== "" ? prod : undefined
     )
     
+    function handleSearchSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+}
 
 
     useEffect(() => {
@@ -76,9 +78,14 @@ export function Catalog() {
                 <form className={styles.searchForm} >
                     <div className={styles.searchBar}>
                         
-                        <input type="text" name="searchPijama" value={prod} onChange={handleProdName} className={styles.searchInput} placeholder="Pesquise pelo produto..."/>
-                    
-                    
+                        <input 
+                            type="text" 
+                            name="searchPijama" 
+                            value={prod} 
+                            onChange={handleProdName} 
+                            className={styles.searchInput} 
+                            placeholder="Pesquise pelo produto..."
+                        />
                         <button type="submit">
                             <img src={lupa} alt="Símbolo de Lupa para Busca" />
                         </button>
@@ -145,8 +152,6 @@ export function Catalog() {
                                         price={item.price}
                                         parcela={item.parcela}
                                       />
-                                    
-
                         ))}
 
 
@@ -161,3 +166,4 @@ export function Catalog() {
         </>
     )
 }
+
