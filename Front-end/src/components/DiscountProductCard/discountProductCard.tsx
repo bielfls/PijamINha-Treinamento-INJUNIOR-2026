@@ -7,6 +7,7 @@ import discount from "../../assets/Desconto.svg"
 import linha from "../../assets/Line 10.svg"
 
 interface DiscountProductCardProps{
+    id: string
     name: string
     image: string
     price: number
@@ -16,7 +17,7 @@ interface DiscountProductCardProps{
 
 export default function DiscountProductCard({name,image,price,onSale,salePercent}: DiscountProductCardProps){
 
-    const[liked, setLiked] = useState(false);
+    const[liked, setLiked] = useState(true);
 
     function handleLike(){
         setLiked(curtido => !curtido)

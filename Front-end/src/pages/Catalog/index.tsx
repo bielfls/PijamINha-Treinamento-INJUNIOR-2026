@@ -5,6 +5,7 @@ import { useEffect } from "react"
 import {getPijamas} from "../../services/GETpijamas/productService"
 import ProductCard from "../../components/ProductCard/productCard"
 import { useSearchParams } from "react-router-dom"
+import DiscountProductCard from "../../components/DiscountProductCard/discountProductCard"
 
 
 interface ProductCard{
@@ -13,7 +14,18 @@ interface ProductCard{
     name: string,
     price: number,
     parcela: string,
+    onSale: boolean
 }
+
+interface DiscountProductCardProps{
+    id: string
+    name: string
+    image: string
+    price: number
+    onSale: boolean
+    salePercent: number | null
+}
+
 
 
 export function Catalog() {
@@ -115,21 +127,26 @@ export function Catalog() {
                     <ul className={styles.pijamasList}>
 
                         {pijama.map(item => (
-                            <ProductCard
-                                id={item.id}
-                                name={item.name}
-                                image={item.image}
-                                price={item.price}
-                                parcela={item.parcela}
-                            />
+                            item.onSale
+                                   ?<DiscountProductCard
+                                    id={item.id}
+                                    name={item.name}
+                                    image={item.image}
+                                    price={item.price}
+                                    salePercent={item.parcela}
+                                    />
+                                    
+                                    : <ProductCard
+                                    id={item.id}
+                                    name={item.name}
+                                    image={item.image}
+                                    price={item.price}
+                                    parcela={item.parcela}
+                                    />
+                                    
+
                         ))}
 
-<<<<<<< HEAD
-                        {/* Essas Divs são apenas Placeholders */}
-
-
-=======
->>>>>>> 829224035304af32b431b257508dd66d0925fb03
 
                     </ul>
                     

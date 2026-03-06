@@ -119,7 +119,7 @@ const { data: promoProducts, isLoading, isError } = useGetPromoProducts();
         </button>
  </div> 
     <div className={styles.feedbackBtn}>
-        <Link to="#" className={styles.feedbackLink}>Também quero dar um feedback!</Link>
+        <Link to="feedback" className={styles.feedbackLink}>Também quero dar um feedback!</Link>
 </div>
       </section>
     </main>
