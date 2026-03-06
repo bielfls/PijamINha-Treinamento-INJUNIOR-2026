@@ -14,6 +14,8 @@
 
     padding: 60px 210px;
     box-sizing: border-box;
+
+    box-shadow: 0 4px 4px #00000040
 }
 
 .searchBar {
