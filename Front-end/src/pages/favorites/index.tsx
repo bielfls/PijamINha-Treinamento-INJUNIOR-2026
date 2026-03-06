@@ -53,22 +53,43 @@ export default function Favorites() {
   };
 
   return (
-    <>
-      <div className={styles.botoes}>
-        <div className={styles.botaoItem}>
-          <Link to="#" className={styles.cartLink}>
-            <img src={cart} alt="carrinho" className={styles.cart} />
-          </Link>
-          <p className={styles.cartText}>Carrinho</p>
-        </div>
 
-        <div className={styles.botaoItem}>
-          <Link to="#" className={styles.favLink}>
-            <img src={favorite} alt="coração" className={styles.fav} />
-          </Link>
-          <p className={styles.favText}>Favoritos ({itens.length})</p>
-        </div>
-      </div>
+    // <div className={styles.botoes}>
+    //     <div className={styles.botaoItem}>
+    //       <Link to="#" className={styles.cartLink}>
+    //         <img src={cart} alt="carrinho" className={styles.cart} />
+    //       </Link>
+    //       <p className={styles.cartText}>Carrinho</p>
+    //     </div>
+
+    //     <div className={styles.botaoItem}>
+    //       <Link to="#" className={styles.favLink}>
+    //         <img src={favorite} alt="coração" className={styles.fav} />
+    //       </Link>
+    //       <p className={styles.favText}>Favoritos ({itens.length})</p>
+    //     </div>
+    //   </div>
+    <>
+      <section className={styles.cartTitles}>
+              <Link to="/cartPage">
+                <div className={styles.titleContainer}>
+                    <figure>
+                        <img src={cart} alt="Símbolo de carrinho de compras" />
+                    </figure>
+                    
+                    <h1 className={styles.cartTitle}>Carrinho</h1>
+                </div>
+              </Link>
+          
+              <div className={styles.titleContainer}>
+                  <figure>
+                      <img src={favorite} alt="Símbolo de favorito" />
+                  </figure>
+                  
+                  <h1 className={styles.favTitle}>Favoritos ({itens.length})</h1>
+              </div>
+          
+        </section>
 
       <div className={styles.carrosselWrapper}>
         <img src={fundo} alt="background" className={styles.background} />

@@ -16,7 +16,7 @@ interface ProductCard{
 }
 
 
-export function Catalog(props: ProductCard) {
+export function Catalog() {
     const[searchParams] = useSearchParams()
     const [gender, setGender] = useState<string>(searchParams.get("gender")|| "Gênero");
     const [type, setType] = useState<string>(searchParams.get("type") || "Tipo");
@@ -124,43 +124,6 @@ export function Catalog(props: ProductCard) {
                             />
                         ))}
 
-                        {/* Essas Divs são apenas Placeholders */}
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
-
-                        <div style={{
-                            width: "408px",
-                            height: "837px",
-                            border: "1px solid black"
-                        }}></div>
 
                     </ul>
                     

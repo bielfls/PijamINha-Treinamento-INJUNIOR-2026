@@ -6,7 +6,7 @@ import Modal from '../../components/Modal';
 import DataFormCart from '../../components/DataFormCart';
 import PayFormCart from '../../components/PayFormCart';
 import ShopCompleted from '../../components/ShopCompleted';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function CartPage() {
 
@@ -32,15 +32,15 @@ export default function CartPage() {
                         
                         <h1 className={styles.cartTitle}>Carrinho</h1>
                     </div>
-
-                    <div className={styles.titleContainer}>
-                        <figure>
-                            <img src={favSyboml} alt="Símbolo de favorito" />
-                        </figure>
-                        
-                        <h1 className={styles.favTitle}>Favoritos</h1>
-                    </div>
-                
+                    <Link to="/favoritos">
+                        <div className={styles.titleContainer}>
+                            <figure>
+                                <img src={favSyboml} alt="Símbolo de favorito" />
+                            </figure>
+                            
+                            <h1 className={styles.favTitle}>Favoritos</h1>
+                        </div>
+                    </Link>
                 </section>
                 
                 <section className={styles.cartShop}>
