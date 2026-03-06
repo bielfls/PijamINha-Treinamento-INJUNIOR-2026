@@ -94,7 +94,7 @@ export default function Favorites() {
               <div key={item.id} className={styles.card}>
                 <button
                   className={styles.heart}
-                  onClick={() => removeFavPajama(item.id)}
+                  onClick={() => removeFavPajama({favorite: false, id: item.id})}
                 >
                   <img src={coracaofav} alt="remover favorito" className={styles.heartImg} />
                 </button>

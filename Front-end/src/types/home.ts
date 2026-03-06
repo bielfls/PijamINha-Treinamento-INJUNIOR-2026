@@ -5,7 +5,7 @@ export interface Pijama {
     price: number;
     onSale: boolean;
     salePercent: number | null;
-    favorite: boolean
+    favorite: boolean   
 }
 
 export interface GetPajamasResponse {

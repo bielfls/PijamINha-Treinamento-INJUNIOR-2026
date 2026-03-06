@@ -21,7 +21,14 @@ interface ProductCard{
 
 export default function ProductCard(props: ProductCard){
 
-    const[liked, setLiked] = useState(props.favorite?? false);
+    const[liked, setLiked] = useState(props.favorite ?? false);
+
+    useEffect(() => {
+
+        setLiked(props.favorite ?? false)
+
+    }, [props.favorite])
+
     const{toggleFavorite} = useFavorite()
 
     function formatPrice(price:number) : string{

@@ -46,9 +46,13 @@ public async getPromoPajamas(limit: number = 30): Promise<HttpResponse<GetPajama
 
 public async toggleFavorite(id: string, favorite: boolean): Promise<HttpResponse<Pijama>>{
     return this.execute<{favorite: boolean}, Pijama>({
-        method: "PUT",
+        method: "PATCH",
         url: `${apiRoutes.PRODUCTSHOME}${id}`,
-        data: {favorite}
+        data: {
+            favorite: favorite
+
+
+        }
     })
 }
 
@@ -58,16 +62,19 @@ public async getFavPajamas(): Promise<HttpResponse<GetPajamasResponse>> {
             method: "GET",
             url: apiRoutes.PRODUCTSHOME,
             params: {
-                favorite: "true",
+                favorite: true,
                 limit: "10000"
             }
         });
     }
 
 public async removeFavPajamas(id: string): Promise<HttpResponse<Pijama>>{
-    return this.execute<void, Pijama>({
-        method: "DELETE",
-        url: `${apiRoutes.PRODUCTSHOME}${id}`
+    return this.execute<{favorite: boolean}, Pijama>({
+        method: "PATCH",
+        url: `${apiRoutes.PRODUCTSHOME}${id}`,
+        data: {
+            favorite: false
+        }
 
     });
 }

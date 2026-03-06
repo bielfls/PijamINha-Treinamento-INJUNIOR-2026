@@ -7,8 +7,9 @@ export function useFavorite(){
     const{mutate, isPending, isError} = useMutation({
         mutationFn: ({id, favorite}: {id: string, favorite: boolean}) => productService.toggleFavorite(id, favorite),
         onSuccess: () => {
-            console.log("token:", useAuthStore.getState().token)
+            console.log("PATCH sucesso, invalidando cache...")
             queryClient.invalidateQueries({queryKey: ["fav-pjs"]})
+            
         }
     })  
 

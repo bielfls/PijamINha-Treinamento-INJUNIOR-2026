@@ -1,9 +1,11 @@
+import { boolean } from "zod";
+
 export interface HttpRequest<TData>{
     data?: TData;
     method:"GET" | "POST" | "PATCH" | "DELETE" | "PUT"
     url: string;
     headers?: Record<string,string>;
-    params?: Record<string,string>;
+    params?: Record<string,string | boolean | number | null>;
 }
 
 export interface HttpResponse<TData>{
