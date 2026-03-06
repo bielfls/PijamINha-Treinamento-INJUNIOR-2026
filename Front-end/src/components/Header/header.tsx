@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import style from "./style.module.css"
 import logo from "../../assets/Logo.svg"
 import cart from "../../assets/Compras.svg"
@@ -7,16 +7,23 @@ import user from "../../assets/User.svg"
 
 
 export default function Header(){
+
+    const navigate = useNavigate()
+
+    function resetPage(){
+        navigate(`/catalogo?reset=${Date.now()}`)
+    }
+
     return(
         <div className={style.headerContainer}>
             <Link to="/" className={style.imgContainer}>
                 <img src={logo} alt="Logo" />
             </Link>
             <div className={style.linksContainer}>
-                <Link className={style.link} to="/catalogo">PIJAMAS</Link>
-                <Link className={style.link} to="/feminino">FEMININO</Link>
-                <Link className={style.link} to="/masculino">MASCULINO</Link>
-                <Link className={style.link} to="/infantil">INFANTIL</Link>
+                <a style={{cursor: "pointer"}}className={style.link} onClick={resetPage}>PIJAMAS</a>
+                <Link className={style.link} to="/catalogo?gender=Feminino">FEMININO</Link>
+                <Link className={style.link} to="/catalogo?gender=Masculino">MASCULINO</Link>
+                <Link className={style.link} to="/catalogo?type=Infantil">INFANTIL</Link>
             </div>
             <div className={style.userSection}>
                 <div className={style.cartLike}>

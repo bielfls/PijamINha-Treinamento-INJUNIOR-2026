@@ -4,37 +4,44 @@ import { useState } from "react"
 import { useEffect } from "react"
 import {getPijamas} from "../../services/GETpijamas/productService"
 import ProductCard from "../../components/ProductCard/productCard"
+import { useSearchParams } from "react-router-dom"
 
 
 interface ProductCard{
     id: string,
     image:string,
     name: string,
-    price: string,
+    price: number,
     parcela: string,
 }
 
 
 export function Catalog(props: ProductCard) {
-    const [genre, setGenre] = useState<string>('');
-    const [type, setType] = useState<string>('');
-    const [season, setSeason] = useState<string>('');
+    const[searchParams] = useSearchParams()
+    const [gender, setGender] = useState<string>(searchParams.get("gender")|| "Gênero");
+    const [type, setType] = useState<string>(searchParams.get("type") || "Tipo");
+    const [season, setSeason] = useState<string>(searchParams.get("season") || "Estação");
     const [prod, setProd] = useState<string>('');
-
     const[pijama, setPijama] = useState<ProductCard[]>([])
     
     useEffect (() =>{
 
-        getPijamas()
+        getPijamas(gender, season, type)
         .then(data => setPijama(data))
         .catch(error => console.error(error))
 
-    }, [props.price])
+    }, [gender, season, type])
+
+    useEffect(() => {
+        setGender(searchParams.get("gender") || "Gênero" )
+        setType(searchParams.get("type") || "Tipo")
+        setSeason(searchParams.get("season") || "Estação")
+    },[searchParams])
 
 
-    function selectGenre(e: React.ChangeEvent<HTMLSelectElement>) {
+    function selectGender(e: React.ChangeEvent<HTMLSelectElement>) {
         console.log(e.target.value);
-        setGenre(e.target.value);
+        setGender(e.target.value);
     }
 
     function selectType(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -54,7 +61,7 @@ export function Catalog(props: ProductCard) {
     return (
 
         <>
-            <main>
+            <main style={{border: "none"}}>
                 <form className={styles.searchForm} >
                     <div className={styles.searchBar}>
                         
@@ -71,9 +78,9 @@ export function Catalog(props: ProductCard) {
                         
                         <div className={styles.filter}>
                             <span></span>
-                            <select name="Gênero" value={genre} onChange={selectGenre}>
-                                <option value="" disabled hidden defaultValue={""}>Gênero</option>
-                                <option value="Todos">Todos</option>
+                            <select name="Gênero" value={gender} onChange={selectGender}>
+                                <option value="Gênero" disabled hidden defaultValue={""}>Gênero</option>
+                                <option value="">Todos</option>
                                 <option value="Unissex">Unissex</option>
                                 <option value="Masculino">Masculino</option>
                                 <option value="Feminino">Feminino</option>
@@ -84,8 +91,8 @@ export function Catalog(props: ProductCard) {
                         <div className={styles.filter}>
                             <span></span>
                             <select name="Tipo" value={type} onChange={selectType}>
-                                <option value="" disabled hidden defaultValue={""}>Tipo</option>
-                                <option value="Todos">Todos</option>
+                                <option value="Tipo" disabled hidden defaultValue={""}>Tipo</option>
+                                <option value="">Todos</option>
                                 <option value="Adulto">Adulto</option>
                                 <option value="Infantil">Infantil</option>
                             </select>
@@ -94,8 +101,8 @@ export function Catalog(props: ProductCard) {
                         <div className={styles.filter}>
                             <span></span>
                             <select name="Estação" value={season} onChange={selectSeason}>
-                                <option value="" disabled hidden defaultValue={""}>Estação</option>
-                                <option value="Todos">Todos</option>
+                                <option value="Estação" disabled hidden defaultValue={""}>Estação</option>
+                                <option value="">Todos</option>
                                 <option value="Verão">Verão</option>
                                 <option value="Inverno">Inverno</option>
                             </select>
