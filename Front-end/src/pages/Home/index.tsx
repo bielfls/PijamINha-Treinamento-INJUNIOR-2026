@@ -76,14 +76,21 @@ const { data: promoProducts, isLoading, isError } = useGetPromoProducts();
     <p>Erro ao carregar produtos.</p>
   ) : (
     promoProducts?.map((pijama) => (
+      <Link 
+        to={`/product/${pijama.id}`} 
+        key={pijama.id} 
+        style={{ textDecoration: 'none', color: 'inherit' }} // Remove o estilo padrão de link azul/sublinhado
+      >
       <DiscountProductCard 
         key={pijama.id} 
+        id={pijama.id}
         name={pijama.name}
         image={pijama.image}
         price={pijama.price}
         onSale={pijama.onSale}
         salePercent={pijama.salePercent}
       />
+      </Link>
     ))
   )}
   </div>

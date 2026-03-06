@@ -8,7 +8,7 @@ import type { LoginRequest } from '../../types/auth'
 import { useState } from 'react'
 
 export const userSchema = z.object({
-    login: z.string().nonempty('Nome ou email devem ser preenchidos').refine(value=>{return  z.string().email().safeParse(value).success||z.string().regex(/^[a-zA-Z0-9]+$/).safeParse(value).success},{ message: 'O nome não pode conter acentos e(ou)espaços'}),
+    email: z.string().nonempty('Nome ou email devem ser preenchidos').refine(value=>{return  z.string().email().safeParse(value).success||z.string().regex(/^[a-zA-Z0-9]+$/).safeParse(value).success},{ message: 'O nome não pode conter acentos e(ou)espaços'}),
     password: z.string().nonempty('Insira sua senha').min(6,'A senha dev ter no mínimo 6 caracteres'),
 })
 
@@ -50,9 +50,9 @@ export default function LoginForm(){
                     className={style.info}
                     placeholder="Usuario ou E-mail"
                     type='text'
-                    {... register('login')}
+                    {... register('email')}
                 />
-                {errors.login && <span className={style.error}>{errors.login.message}</span>}
+                {errors.email && <span className={style.error}>{errors.email.message}</span>}
                 <div className={style.info}>
                     <input
                     className={style.info2}
