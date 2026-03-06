@@ -13,7 +13,7 @@ export function useGetPromoProducts(): PajamasState {
     });
 
     return {
-        data: data ?? [],
+        data: data,
         error: error ?? undefined,
         isPending,
         isError,
