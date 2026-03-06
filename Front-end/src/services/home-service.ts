@@ -8,6 +8,7 @@ class ProductService extends baseService {
     
     // Para o Catálogo
     public async getPajamas(limit: number = 12, gender?: string, type?: string, season?: string, name?: string): Promise<HttpResponse<Pijama[]>> {
+        console.log("params enviados:", { limit, gender, type, season, name })
         console.log("api: ", import.meta.env.VITE_API_URL);
         return this.execute<void, Pijama[]>({
             method: "GET",
