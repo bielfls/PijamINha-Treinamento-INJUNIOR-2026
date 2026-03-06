@@ -36,7 +36,7 @@ const scroll = (direction: number) => {
     behavior: "smooth",
   });
 };
-const { data: promoProducts, isLoading, isError } = useGetPromoProducts();
+const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProducts();
 
   return (
     <main className={styles.container}>
