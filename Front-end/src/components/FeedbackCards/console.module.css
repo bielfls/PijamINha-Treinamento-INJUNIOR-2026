@@ -33,7 +33,11 @@
   height: 70px;
 }
 
-.comment {
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   font-family: "Nunito Sans", sans-serif;
   font-size: 17px;
   font-weight: 400;
