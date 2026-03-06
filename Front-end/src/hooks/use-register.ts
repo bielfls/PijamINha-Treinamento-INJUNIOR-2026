@@ -14,10 +14,8 @@ export function useRegister(callbacks?: {
     const { data, error, isPending, isError, isSuccess, mutate, reset } = useMutation({
         mutationKey:["register"],
         
-        mutationFn: async(data:RegisterRequest)=> {
-            const { confirmPassword, ...registerData } = data;
-            return authService.register(data).then((res) => res.data)
-        },
+        mutationFn: async(data:RegisterRequest)=> 
+            authService.register(data).then((res) => res.data),
             onSuccess: callbacks?.onSuccess,
             onError:  callbacks?.onError
     

@@ -16,7 +16,7 @@ const accountSchema = z.object({
     message: 'As senhas não coincidem',
     path: ['confirmPassword']
 } )
-
+type FormValues = z.infer<typeof accountSchema>;
 export default function RegisterForm(){
     const navigate = useNavigate()
     const { execute: createUser, error, isPending } = useRegister({
@@ -28,11 +28,14 @@ export default function RegisterForm(){
         }
     })
     
-    const { register, handleSubmit, reset, formState:{errors, isSubmitting},setError } = useForm<RegisterRequest>({
+    const { register, handleSubmit, reset, formState:{errors, isSubmitting},setError } = useForm<FormValues>({
         resolver: zodResolver(accountSchema)
     })
     
-      const onSubmit = (data: RegisterRequest) => createUser(data);
+      const onSubmit = (data: FormValues) =>{
+        const { confirmPassword, ...payload } = data;
+        createUser(payload)
+      } 
   
     return(
         <div className={style.load}>
