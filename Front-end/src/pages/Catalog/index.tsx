@@ -124,12 +124,7 @@ export function Catalog() {
                             />
                         ))}
 
-<<<<<<< HEAD
-                        {/* Essas Divs são apenas Placeholders */}
 
-
-=======
->>>>>>> 829224035304af32b431b257508dd66d0925fb03
 
                     </ul>
                     

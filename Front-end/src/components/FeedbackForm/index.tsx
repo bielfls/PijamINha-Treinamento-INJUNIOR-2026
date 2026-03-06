@@ -21,14 +21,11 @@ export default function FeedbackForm(){
        const { rating, backRating } = useRatingStore()
        const [ratingError, setRatingError]= useState('')
        const navigate = useNavigate()
-       const { execute: feedbackUser, error, isPending } = useGiveFeedback({
+       const { execute: feedbackUser, error, isPending, isError } = useGiveFeedback({
                onSuccess: () => {
                    backRating()
                    navigate("/")        
    
-               },
-               onError: ({ message }) => {
-                   console.log(message);
                }
            })
            const { register, handleSubmit, reset, formState:{errors, isSubmitting},setError } = useForm<Feedback>({
@@ -47,9 +44,22 @@ export default function FeedbackForm(){
             }
             feedbackUser(form)
            }
-   
-          
+        let errorMessage = "";
+        if (isError && error) {
+               const backendMessage = (error as any).message;
+                 switch (backendMessage) {
+             
+               case "Dados de registro inválidos!": 
+                   errorMessage = "Insira as informações corretas";
+                   break;
+               default:
+                  
+                   errorMessage = backendMessage || "Erro ao realizar cadastro";
+                   break;
+               }
+           }  
     return(
+
         <div className={style.load}>
             <div className={style.box}>
                 <h1>Feedback</h1>
@@ -75,7 +85,7 @@ export default function FeedbackForm(){
                 <div className={style.buttons}>
                     <button disabled={isPending}className={style.signe}>{isPending?'Enviando...':'Enviar'}
                     </button>
-                    {errors.root && <span>{errors.root.message}</span>}
+                    {isError && <span>{errorMessage}</span>}
                 </div>
             </form>
 
