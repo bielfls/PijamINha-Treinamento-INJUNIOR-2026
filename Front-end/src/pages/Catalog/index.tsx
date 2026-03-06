@@ -1,10 +1,10 @@
 import styles from "./styles.module.css"
 import lupa from "../../assets/lupa.png"
-import { useState } from "react"
-import { useEffect } from "react"
-import {getPijamas} from "../../services/GETpijamas/productService"
+import { useState, useEffect } from "react"
+import { useCatalog } from "../../hooks/use-catalogojs"
 import ProductCard from "../../components/ProductCard/productCard"
 import { useSearchParams } from "react-router-dom"
+import DiscountProductCard from "../../components/DiscountProductCard/discountProductCard"
 
 
 interface ProductCard{
@@ -13,7 +13,18 @@ interface ProductCard{
     name: string,
     price: number,
     parcela: string,
+    onSale: boolean
 }
+
+interface DiscountProductCardProps{
+    id: string
+    name: string
+    image: string
+    price: number
+    onSale: boolean
+    salePercent: number | null
+}
+
 
 
 export function Catalog() {
@@ -21,16 +32,16 @@ export function Catalog() {
     const [gender, setGender] = useState<string>(searchParams.get("gender")|| "Gênero");
     const [type, setType] = useState<string>(searchParams.get("type") || "Tipo");
     const [season, setSeason] = useState<string>(searchParams.get("season") || "Estação");
-    const [prod, setProd] = useState<string>('');
-    const[pijama, setPijama] = useState<ProductCard[]>([])
+    const[searchName, setSearchName] = useState<string>("")
+    const [prod, setProd] = useState<string>("");
+    const{data: pijama, isPending, isError} = useCatalog(
+        gender !== "Gênero" ? gender : undefined,
+        type !== "Tipo" ? type : undefined,
+        season !== "Estação" ? season : undefined
+
+    )
     
-    useEffect (() =>{
 
-        getPijamas(gender, season, type)
-        .then(data => setPijama(data))
-        .catch(error => console.error(error))
-
-    }, [gender, season, type])
 
     useEffect(() => {
         setGender(searchParams.get("gender") || "Gênero" )
@@ -112,20 +123,37 @@ export function Catalog() {
                                 
                 </form>
                 <section className={styles.pijamasSection}>
+                    {isPending && <p>Carregando...</p>}
+                    {isError && <p>Erro ao carregar catálogo.</p>}
                     <ul className={styles.pijamasList}>
 
-                        {pijama.map(item => (
-                            <ProductCard
-                                id={item.id}
-                                name={item.name}
-                                image={item.image}
-                                price={item.price}
-                                parcela={item.parcela}
-                            />
+                        {pijama?.map(item => (
+                            item.onSale
+                                   ?<DiscountProductCard
+                                        id={item.id}
+                                        name={item.name}
+                                        image={item.image}
+                                        price={item.price}
+                                        salePercent={item.parcela}
+                                        onSale={item.onSale}
+                                    />
+                                    
+                                    : <ProductCard
+                                        id={item.id}
+                                        name={item.name}
+                                        image={item.image}
+                                        price={item.price}
+                                        parcela={item.parcela}
+                                      />
+                                    
+
                         ))}
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> a94b5868ba7c616a2da9205bc4e0f23ee97a981c
                     </ul>
                     
                     {/* Possível Componente */}

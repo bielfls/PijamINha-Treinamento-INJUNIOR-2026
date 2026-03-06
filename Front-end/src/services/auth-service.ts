@@ -36,7 +36,7 @@ class AuthService extends baseService {
     public async getFeedbacks():Promise<HttpResponse<FeedbackResponse[]>>{
         return this.execute<void, FeedbackResponse[]>({
             method:"GET",
-            url: apiRoutes.FEEDBACKS,
+            url: apiRoutes.FEEDBACK,
             params:{
                 min:"4"
             }

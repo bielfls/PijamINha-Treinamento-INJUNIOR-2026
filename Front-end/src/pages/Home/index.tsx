@@ -13,18 +13,11 @@ import setaesq from "../../assets/setaesq.png";
 import setadir from "../../assets/setadir.png";
 import { Link } from "react-router-dom";
 import { useGetPromoProducts } from "../../hooks/use-homepjs";
+import { useGetFeedbacks } from "../../hooks/use-feedbackshome";
 
 
 export default function Home() {
-const feedbacks = [
-  { id: 1, name: "Fulano da Silva", rating: 4, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-  { id: 2, name: "Beltrano Souza", rating: 4, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-  { id: 3, name: "Ciclano Mendes", rating: 5, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-  { id: 4, name: "Ana Paula", rating: 5, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-  { id: 5, name: "Carlos Eduardo", rating: 3, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-  { id: 6, name: "Mariana Lima", rating: 5, comment: "Lorem ipsum dolor sit amet. Et voluptatem officia ad sint voluptate qui voluptas sunt non fugiat labore et consequatur voluptatem sed optio veniam aut perferendis delectus!" },
-];
-
+const { data: feedbackData, isPending: isFeedbackLoading, isError: isFeedbackError} = useGetFeedbacks();
 const feedbackRef = useRef<HTMLDivElement>(null);
 
 const scroll = (direction: number) => {
@@ -36,7 +29,7 @@ const scroll = (direction: number) => {
     behavior: "smooth",
   });
 };
-const { data: promoProducts, isLoading, isError } = useGetPromoProducts();
+const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProducts();
 
   return (
     <main className={styles.container}>
@@ -100,11 +93,20 @@ const { data: promoProducts, isLoading, isError } = useGetPromoProducts();
         <p className={styles.textoFeed}>Feedbacks</p>
         <div className={styles.feedbackContainer}> 
           <div className={styles.feedbackTrack} ref={feedbackRef}>
-            {feedbacks.map((f) => (
-              <FeedbackCard key={f.id} name={f.name} rating={f.rating} comment={f.comment} />
-            ))}
-          </div>
-
+  {isFeedbackLoading ? (
+    <p>Carregando depoimentos...</p>
+  ) : isFeedbackError ? (
+    <p>Não foi possível carregar os feedbacks.</p>
+  ) : (
+    feedbackData.map((f) => (
+      <FeedbackCard 
+        name={f.name} 
+        rating={f.rating} 
+        description={f.description}
+      />
+    ))
+  )}
+</div>
         <button
             className={`${styles.feedbackArrow} ${styles.feedbackLeft}`}
             onClick={() => scroll(-1)}
@@ -119,7 +121,7 @@ const { data: promoProducts, isLoading, isError } = useGetPromoProducts();
         </button>
  </div> 
     <div className={styles.feedbackBtn}>
-        <Link to="#" className={styles.feedbackLink}>Também quero dar um feedback!</Link>
+        <Link to="feedback" className={styles.feedbackLink}>Também quero dar um feedback!</Link>
 </div>
       </section>
     </main>

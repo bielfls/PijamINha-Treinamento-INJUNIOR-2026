@@ -57,10 +57,10 @@ export default function ProductCard(props: ProductCard){
             </div>
             <div className={style.infoContainer}>
                 <p style={{color: "#3E677A", fontSize: "24px", fontWeight: "400" }}>{props.name}</p>
-                <h1 style={{marginTop: "1rem", color: "#274553", fontSize: "40px", fontWeight: "700"}}>{formatPrice(props.price)}</h1>
+                <h1 style={{marginTop: "1rem", color: "#274553", fontSize: "40px", fontWeight: "700"}}>{"R$ " + formatPrice(props.price)}</h1>
                 <div className={style.parcelaContainer}>
                     <p style={{color: "#274553", fontSize: "16px", fontWeight: "400"}}>6x de </p>
-                    <p style={{color: "#274553", fontSize: "16px", fontWeight: "800", fontStyle: "ExtraBold"}}>{calculoParcela(props.price)}</p>
+                    <p style={{color: "#274553", fontSize: "16px", fontWeight: "800", fontStyle: "ExtraBold"}}>{"R$ " + calculoParcela(props.price)}</p>
                 </div>
             </div>
         </div>

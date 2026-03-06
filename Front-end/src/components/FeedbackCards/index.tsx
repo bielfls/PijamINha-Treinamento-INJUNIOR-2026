@@ -6,10 +6,10 @@ import starMetade from "../../assets/starmetade.png";
 interface FeedbackCardProps {
   name: string;
   rating: number;
-  comment: string;
+  description: string;
 }
 
-export default function FeedbackCard({ name, rating, comment }: FeedbackCardProps) {
+export default function FeedbackCard({ name, rating, description }: FeedbackCardProps) {
   const renderStars = () => {
     return [1, 2, 3, 4, 5].map((star) => {
       let src = starVazia;
@@ -26,7 +26,7 @@ export default function FeedbackCard({ name, rating, comment }: FeedbackCardProp
       <div className={styles.stars}>
         {renderStars()}
       </div>
-      <p className={styles.comment}>{comment}</p>
+      <p className={styles.description}>{description}</p>
     </div>
   );
 }

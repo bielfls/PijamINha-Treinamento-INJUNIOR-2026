@@ -1,16 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Pijama } from "../types/home";
 import { productService } from "../services/home-service";
+import type { PajamasState } from "../types/state";
 
-export function useGetPromoProducts() {
-    return useQuery({
-        queryKey: ["promo-products-home"],
+export function useGetPromoProducts(): PajamasState {
+
+    const { data, error, isError, isPending, isSuccess, refetch } = useQuery({
+        queryKey: ["promo-pjs"],
         queryFn: async () => {
-            const response = await productService.getPajamas();
-            const allPajamas: Pijama[] = response.data.pajamas;
-            const Promo = allPajamas.filter((p) => p.onSale === true);
-            const escolhidos = Promo.sort(() => Math.random() - 0.5);
-            return escolhidos.slice(0, 3);
-        },
+            const res = await productService.getPromoPajamas(3);
+            return Array.isArray(res.data?.pajamas) ? res.data.pajamas : [];
+        }
     });
+
+    return {
+        data: data,
+        error: error ?? undefined,
+        isPending,
+        isError,
+        isSuccess,
+        execute: () => refetch()
+    }
 }
