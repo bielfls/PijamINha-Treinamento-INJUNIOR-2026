@@ -21,9 +21,6 @@ export default function ProductCard(props: ProductCard){
 
     const[liked, setLiked] = useState(true);
 
-
-
-
     function formatPrice(price:number) : string{
         return price.toFixed(2).replace(".", ",")
     }
@@ -34,6 +31,10 @@ export default function ProductCard(props: ProductCard){
     
     function handleLike(){
         setLiked(curtido => !curtido)
+    }
+
+    function addFavorito(){
+        
     }
 
 
