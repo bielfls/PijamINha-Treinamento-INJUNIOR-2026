@@ -5,6 +5,8 @@ import { useState } from "react"
 import {Link} from "react-router-dom"
 import discount from "../../assets/Desconto.svg"
 import linha from "../../assets/Line 10.svg"
+import backgroundImage from "../../assets/Front view of a young lady in pajamas staying in bed.png"
+
 
 interface DiscountProductCardProps{
     id: string
@@ -15,7 +17,7 @@ interface DiscountProductCardProps{
     salePercent: number | null
 }
 
-export default function DiscountProductCard({name,image,price,onSale,salePercent}: DiscountProductCardProps){
+export default function DiscountProductCard({name,price,onSale,salePercent}: DiscountProductCardProps){
 
     const[liked, setLiked] = useState(true);
 
@@ -28,7 +30,7 @@ export default function DiscountProductCard({name,image,price,onSale,salePercent
     return(
         <div className={style.cardContainer}>
             <div className={style.imgContainer}>
-                <img src={image} alt="product image" />
+                <img src={backgroundImage} alt="product image" />
                 <div className={style.buttonContainer}>
                 <label style={{ backgroundColor: "transparent", cursor: "pointer"}}>
                     <input
