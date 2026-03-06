@@ -6,7 +6,7 @@ import { makeCreatePajamaUseCase } from "@/use-cases/factories/pajamas/make-crea
 
 export async function createPajama(request: FastifyRequest, reply: FastifyReply) {
 
-        const createPajamaBodySchema = z.object({
+        try{const createPajamaBodySchema = z.object({
             name: z.string().min(1).max(100),
             description: z.string().min(1),
             image: z.string(),
@@ -38,4 +38,10 @@ export async function createPajama(request: FastifyRequest, reply: FastifyReply)
         })
 
         return reply.status(201).send({pajama: PajamaPresenter.toHTTP(pajama)})
+    }catch (err) {
+    console.error(err) 
+
+    // O que o usuário vê no Postman:
+    return reply.status(500).send({ message: 'Erro interno do servidor!' })
+  }
 }
