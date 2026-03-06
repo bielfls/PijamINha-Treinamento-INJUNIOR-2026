@@ -77,6 +77,11 @@
     width: 100%;
 }
 
+.precoOriginal p {
+    text-decoration: line-through;
+    text-decoration-color: #D00D10;
+}
+
 .parcelaContainer{
     display: flex;
     align-items: center;
