@@ -145,8 +145,6 @@ export function Catalog() {
                                         price={item.price}
                                         parcela={item.parcela}
                                       />
-                                    
-
                         ))}
 
 
