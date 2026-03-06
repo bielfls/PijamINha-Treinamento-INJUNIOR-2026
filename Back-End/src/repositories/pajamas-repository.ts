@@ -19,7 +19,7 @@ interface ListPajamasResponse {
 
 export interface PajamasRepository {
     create(data: Prisma.PajamasCreateInput) : Promise<PajamaWithSizes>
-    update(pajamaId: string, favorite?: boolean, size?: string, quantity?: number): Promise<void>
+    update(pajamaId: string, favorite?: boolean, size?: string, quantity?: number): Promise<PajamaWithSizes>
     findById(publicId: string): Promise<Pajamas | null>
     findWithSizesById(publicId: string): Promise<PajamaWithSizes | null>
     delete(id: number): Promise<Pajamas>
