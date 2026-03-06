@@ -62,6 +62,7 @@ const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProduc
 </section>
 <section className={styles.promos}>
   <img src={background2} alt="background" className={styles.feedbackBg} />
+  <p className={styles.promosTitle}>Nossas últimas promoções!</p>
   <div className={styles.products}>
   {isLoading ? (
     <p>Carregando ofertas exclusivas...</p>
@@ -128,5 +129,6 @@ const { data: promoProducts, isPending: isLoading, isError } = useGetPromoProduc
     </main>
   );
 }
+
 
 
