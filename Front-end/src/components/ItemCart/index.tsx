@@ -7,7 +7,7 @@ import { useState } from 'react';
 import type { CartPajama } from '../../types/pajama';
 import { calculateFinalPrice, formatPrice } from '../../utils/pricesFunctions';
 
-export default function ItemCart(props: CartPajama) {
+export default function ItemCart(props: CartPajama & { className?: string }) {
 
     const [quantity, setQuantity] = useState<number>(props.quantity);
     
@@ -27,7 +27,7 @@ export default function ItemCart(props: CartPajama) {
 
 
     return(
-        <li className={styles.itemCart}>
+        <li className={`${styles.itemCart} ${props.className || ''}`}>
             <figure className={styles.itemFigure}> 
                 <img src={props.pajama.image} alt="Imagem doPijama" />
             </figure>

@@ -61,21 +61,21 @@ export default function CartPage() {
 
                     <ul className={styles.cartItems}>
                         {cart.length > 0 ? (
-        cart.map((item) => (
-            <li key={`${item.pajama.id}-${item.size}`} className={styles.cartItemCard}>
-                <ItemCart
-                    stock={item.stock}
-                    size={item.size}
-                    quantity={item.quantity}
-                    pajamasId={item.pajamasId}
-                    pajama={item.pajama}
-                />
-            </li>
-        ))
+                            cart.map((item) => (
+                                    <ItemCart  
+                                        className={styles.cartItemCard}
+                                        key={`${item.pajama.id}-${item.size}`}
+                                        stock={item.stock}
+                                        size={item.size}
+                                        quantity={item.quantity}
+                                        pajamasId={item.pajamasId}
+                                        pajama={item.pajama}
+                                    />
+                            ))
 
-    ) : (
-        <p className={styles.emptyCart}>Seu carrinho está vazio.</p>
-    )}
+                        ) : (
+                            <p className={styles.emptyCart}>Seu carrinho está vazio.</p>
+                        )}
                     </ul>
                     
 
