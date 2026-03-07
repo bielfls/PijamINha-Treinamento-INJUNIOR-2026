@@ -1,7 +1,7 @@
 import styles from "./styles.module.css"
 import lupa from "../../assets/lupa.png"
 import { useState, useEffect } from "react"
-import { useCatalog } from "../../hooks/use-catalogo"
+import { useCatalog } from "../../hooks/use-catalogojs"
 import ProductCard from "../../components/ProductCard/productCard"
 import { useSearchParams } from "react-router-dom"
 import DiscountProductCard from "../../components/DiscountProductCard/discountProductCard"
@@ -137,27 +137,33 @@ export function Catalog() {
                     {isError && <p>Erro ao carregar catálogo.</p>}
                     <ul className={styles.pijamasList}>
 
-                        {pijama?.map(item => (
-                            item.onSale
-                                   ?<DiscountProductCard
-                                        id={item.id}
-                                        name={item.name}
-                                        image={item.image}
-                                        price={item.price}
-                                        salePercent={item.parcela}
-                                        onSale={item.onSale}
-                                        favorite={item.favorite}
-                                    />
-                                    
-                                    : <ProductCard
-                                        id={item.id}
-                                        name={item.name}
-                                        image={item.image}
-                                        price={item.price}
-                                        parcela={item.parcela}
-                                        favorite={item.favorite}
-                                      />
-                        ))}
+                        {pijama?.map(item => {
+
+    const temDescontoReal = !item.onSale;
+
+    return temDescontoReal ? (
+        <DiscountProductCard
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            image={item.image}
+            price={item.price}
+            salePercent={item.salePercent || 10} 
+            onSale={true}
+            favorite={item.favorite}
+        />
+    ) : (
+        <ProductCard
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            image={item.image}
+            price={item.price}
+            parcela={item.parcela}
+            favorite={item.favorite}
+        />
+    );
+})}
 
 
                     </ul>
@@ -171,4 +177,3 @@ export function Catalog() {
         </>
     )
 }
-
