@@ -7,8 +7,6 @@ export function useRenderFavorites(): PajamasState {
 
     const { data, error, isError, isPending, isSuccess, refetch } = useQuery({
         queryKey: ["fav-pjs"],
-        staleTime: 0,
-        gcTime: 0,
         refetchOnWindowFocus: true,
         queryFn: async () => {
             console.log("buscando favoritos...")
