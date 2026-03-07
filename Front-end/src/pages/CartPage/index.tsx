@@ -9,7 +9,7 @@ import ShopCompleted from '../../components/ShopCompleted';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function CartPage() {
-
+    const [buyerData, setBuyerData] = useState<any>(null);
     const [modalStep, setModalStep] = useState<"data" | "payment" | "completed" | null>(null);
     const navigate = useNavigate();
 
@@ -70,11 +70,15 @@ export default function CartPage() {
                 {modalStep && (
                     <Modal onClose={() => setModalStep(null)} atualModal={modalStep}>
                         {modalStep === "data" && (
-                        <DataFormCart nextStep={() => proxStep("payment")} />
+                        <DataFormCart nextStep={() => proxStep("payment")} 
+                            onSaveData={(data) => setBuyerData(data)}
+                        />
                         )}
 
                         {modalStep === "payment" && (
-                        <PayFormCart nextStep={() => proxStep("completed")} backStep={() => proxStep("data")} />
+                        <PayFormCart nextStep={() => proxStep("completed")} backStep={() => proxStep("data")} 
+                        buyerData={buyerData}
+                        />
                         )}
 
                         {modalStep === "completed" && (

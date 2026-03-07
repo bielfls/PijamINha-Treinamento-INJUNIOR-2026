@@ -3,7 +3,8 @@ import arrowLeft from '../../assets/LeftArrowWhite.png'
 import z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import { useSale } from '../../hooks/use-sale'
+import usePajamaStore from '../../stores/CartStore';
 
 const payFormSchema = z
     .object({
@@ -54,7 +55,18 @@ const payFormSchema = z
 
 type PayingUser = z.infer<typeof payFormSchema>
 
-export default function PayFormCart({nextStep , backStep}: {nextStep: () => void, backStep: () => void}) {
+export default function PayFormCart({nextStep , backStep, buyerData}: {nextStep: () => void, backStep: () => void, buyerData:any}) {
+
+    const { cart } = usePajamaStore()
+
+    const {execute: makeSale, isPending } = useSale({
+        onSuccess:()=>{
+            nextStep()
+        },
+        onError:()=>{
+            setError('root' , {message:"Erro ao processar venda"})
+        }
+    })
 
     // const [paymentMethod, setPaymentMethod] = useState<string>('');
     // const [installments, setInstallments] = useState<string>('');
@@ -89,17 +101,36 @@ export default function PayFormCart({nextStep , backStep}: {nextStep: () => void
     async function submitPayForm(data: PayingUser) {
         try{
 
-            await new Promise(resolve => setTimeout(resolve,2000))
-            console.log(data)
-            nextStep()
-        
-        } catch {
-            setError('root', {
-                message:"Erro ao submeter os dados"
-            })
+            const cartPajamas = cart.map((item) => ({
+            size: item.size,
+            quantity: item.quantity,
+            pajamasId: item.id,
+            }))
+            const payment = data.paymentMethod === 'cartao'? 'CARD' : 'PIX'
+           
+            const payload = {
+                buyerName: buyerData.nome,
+                cpf: buyerData.cpf,
+                paymentMethod:payment as any, 
+                installments: data.installments ? Number(data.installments) : 1,
+                address: {
+                    zipCode: buyerData.cep,
+                    state: buyerData.uf,
+                    city: buyerData.cidade,
+                    neighborhood: buyerData.bairro,
+                    address: buyerData.logradouro,
+                    number: String(buyerData.numero)
+                },
+                pajamasBuy: cartPajamas
+            };
+            makeSale(payload);
+
+            } catch {
+            setError('root', { message: "Erro ao submeter dados"})
+            }
         }
         reset()
-    }
+    
 
     return (
         <form className={styles.payForm} onSubmit={handleSubmit(submitPayForm)}>
@@ -154,13 +185,13 @@ export default function PayFormCart({nextStep , backStep}: {nextStep: () => void
 
             <div className={styles.payBtns}>
                     
-                <button className={styles.backBtn} onClick={backStep}>
+                <button  type= 'button' className={styles.backBtn} onClick={backStep}>
                     <img src={arrowLeft} alt="Seta esquerda" />
                     <p>VOLTAR</p>
                 </button>
                 
                 <button className={styles.sendBtn} disabled={isSubmitting} type="submit">
-                    {isSubmitting ? "ENVIANDO.." : "ENVIAR"}
+                    {isPending ? "ENVIANDO.." : "ENVIAR"}
                 </button>
             
             </div>
@@ -168,4 +199,6 @@ export default function PayFormCart({nextStep , backStep}: {nextStep: () => void
         
         </form>
     )
+
+
 }

@@ -4,5 +4,6 @@ export const apiRoutes = {
     ME: "/users/:publicId",
     FEEDBACK:"/feedbacks/",
     FEEDBACKS:"/feedbacks/:publicId",
-    PRODUCTSHOME: "/pajamas/"
+    PRODUCTSHOME: "/pajamas/",
+    SALES: "/sales"
 }
