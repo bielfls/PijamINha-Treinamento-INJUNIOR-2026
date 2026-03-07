@@ -1,7 +1,7 @@
 import styles from "./styles.module.css"
 import lupa from "../../assets/lupa.png"
 import { useState, useEffect } from "react"
-import { useCatalog } from "../../hooks/use-catalogojs"
+import { useCatalog } from "../../hooks/use-catalogo"
 import ProductCard from "../../components/ProductCard/productCard"
 import { useSearchParams } from "react-router-dom"
 import DiscountProductCard from "../../components/DiscountProductCard/discountProductCard"
@@ -177,3 +177,4 @@ export function Catalog() {
         </>
     )
 }
+
