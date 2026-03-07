@@ -55,7 +55,7 @@ const dataFormSchema = z.object({
 
 type CartingUser = z.infer<typeof dataFormSchema>
 
-export default function DataFormCart({nextStep}: {nextStep: () => void}) {
+export default function DataFormCart({nextStep, onSaveData}: {nextStep: () => void, onSaveData: (data: CartingUser) => void }) {
 
     const { 
         register, 
@@ -68,9 +68,7 @@ export default function DataFormCart({nextStep}: {nextStep: () => void}) {
 
     async function submitDataForm(data: CartingUser) {
         try{
-
-            await new Promise(resolve => setTimeout(resolve,2000))
-            console.log(data)
+            onSaveData(data)
             nextStep()
         
         } catch {
@@ -78,7 +76,6 @@ export default function DataFormCart({nextStep}: {nextStep: () => void}) {
                 message:"Erro ao submeter os dados"
             })
         }
-        reset()
     }
 
     return (
