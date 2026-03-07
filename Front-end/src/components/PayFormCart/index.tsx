@@ -104,7 +104,8 @@ export default function PayFormCart({nextStep , backStep, buyerData}: {nextStep:
             const cartPajamas = cart.map((item) => ({
             size: item.size,
             quantity: item.quantity,
-            pajamasId: item.id,
+            pajamasId: item.pajama.id,
+            
             }))
             const payment = data.paymentMethod === 'cartao'? 'CARD' : 'PIX'
            
@@ -124,12 +125,12 @@ export default function PayFormCart({nextStep , backStep, buyerData}: {nextStep:
                 pajamasBuy: cartPajamas
             };
             makeSale(payload);
+            reset()
 
             } catch {
             setError('root', { message: "Erro ao submeter dados"})
             }
         }
-        reset()
     
 
     return (

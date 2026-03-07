@@ -4,34 +4,41 @@ import plusSymbol from "../../assets/Plus Math.png"
 import minusSymbol from "../../assets/Subtract.png"
 import X from "../../assets/X.png"
 import { useState } from 'react';
+import type { CartPajama } from '../../types/pajama';
+import { calculateFinalPrice, formatPrice } from '../../utils/pricesFunctions';
 
-export default function ItemCart() {
+export default function ItemCart(props: CartPajama) {
 
-    const [quantity, setQuantity] = useState<number>(1);
-
+    const [quantity, setQuantity] = useState<number>(props.quantity);
+    
+    
     function increaseQuantity() {
-        setQuantity(prev => prev + 1);
+        if (props.size !== '' && quantity < props.stock) {
+            setQuantity(prev => prev + 1);
+        }
     }
 
     function decreaseQuantity() {
-        if (quantity > 1) {
+        if (quantity > props.quantity) {
             setQuantity(prev => prev - 1);
         }
     }
+    
+
 
     return(
         <li className={styles.itemCart}>
             <figure className={styles.itemFigure}> 
-                <img src={pijamaImg} alt="Imagem doPijama" />
+                <img src={props.pajama.image} alt="Imagem doPijama" />
             </figure>
             
             <div className={styles.itemInfo}>
                 <div className={styles.itemDescription}>
-                    <h1>PIJAMA FEMININO LONGO - ESTAMPA POÁ </h1>
+                    <h1>{props.pajama.name} </h1>
                     <p>Ref: #123456</p>
                 </div>
                 
-                <figure>M</figure>
+                <figure>{props.size}</figure>
             </div>
 
             <div className={styles.manageItemCart}>
@@ -54,11 +61,11 @@ export default function ItemCart() {
                             <button onClick={increaseQuantity}><img src={plusSymbol} alt="Símbolo de Adição" /></button>
                         </div>
 
-                        <p className={styles.stockMsg}>Não perca sua oportunidade! Há apenas mais <span>12</span> peças disponíveis!</p>
+                        <p className={styles.stockMsg}>Não perca sua oportunidade! Há apenas mais <span>{props.stock}</span> peças disponíveis!</p>
 
                     </div>
 
-                    <p className={styles.priceMsg}>R$ 157,80</p>
+                    <p className={styles.priceMsg}>{formatPrice(quantity*calculateFinalPrice(props.pajama))}</p>
                 
                 </div>
                 

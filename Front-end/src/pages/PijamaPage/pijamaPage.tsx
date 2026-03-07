@@ -106,17 +106,12 @@ export default function PijamaPage(props: ProductCard) {
 
        
         const cartItem: CartPajama= {
-            ...pajama,
-            id: pajama.id,
-            name: pajama.name,
-            image: pajama.image,
-            price: calculateFinalPrice(pajama), // Salva já o preço final calculado
+            pajama: pajama,
             size: choosenSize,
             quantity: quantity,
             pajamasId: 1,
             // stock:  pajama?.sizes.find(s => s.size === choosenSize)?.stockQuantity}
             stock: 15,
-            salePercent: pajama.salePercent,
         };
 
        

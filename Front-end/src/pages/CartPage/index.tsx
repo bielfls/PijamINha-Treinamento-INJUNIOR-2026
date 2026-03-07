@@ -1,19 +1,30 @@
 import styles from './styles.module.css';
 import redCart from '../../assets/RedCart.png';
 import favSyboml from '../../assets/Favorito.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from '../../components/Modal';
 import DataFormCart from '../../components/DataFormCart';
 import PayFormCart from '../../components/PayFormCart';
 import ShopCompleted from '../../components/ShopCompleted';
 import { Link, useNavigate } from 'react-router-dom';
 import usePajamaStore from '../../stores/CartStore';
+import ItemCart from '../../components/ItemCart';
+import { calculateFinalPrice, formatPrice } from '../../utils/pricesFunctions';
+
 
 export default function CartPage() {
     const [buyerData, setBuyerData] = useState<any>(null);
     const { cart, removeFromCart } = usePajamaStore();
     const [modalStep, setModalStep] = useState<"data" | "payment" | "completed" | null>(null);
     const navigate = useNavigate();
+    const[total, setTotal] = useState<number>(0)
+    
+    useEffect(() => {
+        const totalPrice = cart.reduce((sum, item) => {
+            return sum + (calculateFinalPrice(item.pajama) * item.quantity);
+        }, 0);
+        setTotal(totalPrice);
+    }, [cart]);
 
     function proxStep(step: "data" | "payment" | "completed") {
         setModalStep(step);
@@ -22,6 +33,7 @@ export default function CartPage() {
     function backHome() {
         navigate("/");
     }
+
 
     return(
         <>
@@ -48,17 +60,29 @@ export default function CartPage() {
                 <section className={styles.cartShop}>
 
                     <ul className={styles.cartItems}>
-                        <div style={{width: "1344px", height: "287px", border: "1px solid black"}}></div>
-                        <div style={{width: "1344px", height: "287px", border: "1px solid black"}}></div>
-                        <div style={{width: "1344px", height: "287px", border: "1px solid black"}}></div>
-                        <div style={{width: "1344px", height: "287px", border: "1px solid black"}}></div>
+                        {cart.length > 0 ? (
+        cart.map((item) => (
+            <li key={`${item.pajama.id}-${item.size}`} className={styles.cartItemCard}>
+                <ItemCart
+                    stock={item.stock}
+                    size={item.size}
+                    quantity={item.quantity}
+                    pajamasId={item.pajamasId}
+                    pajama={item.pajama}
+                />
+            </li>
+        ))
+
+    ) : (
+        <p className={styles.emptyCart}>Seu carrinho está vazio.</p>
+    )}
                     </ul>
                     
 
                     <div className={styles.shoppingResume}>
                         <div className={styles.totalPrice}>
                             <p>Total</p>
-                            <p>R$ 2.000,00</p>
+                            <p>{formatPrice(total)}</p>
                         </div>
                         
                         <button className={styles.shopBtn} onClick={() => setModalStep("data")}>
