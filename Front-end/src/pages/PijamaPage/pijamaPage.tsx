@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import styles from "./styles.module.css"
 import plusSymbol from "../../assets/Plus Math.png"
@@ -16,6 +16,19 @@ import maleIcon from "../../assets/Property 1=Masculino.png"
 import femaleIcon from "../../assets/Property 1=Feminino.png"
 import unissexIcon from "../../assets/Property 1=Variant4.png"
 import familyIcon from "../../assets/Property 1=Familia.png"
+import { useFavorite } from "../../hooks/use-favorite";
+
+
+
+interface ProductCard{
+    id: string,
+    image:string,
+    name: string,
+    price: number,
+    parcela: string,
+    favorite: boolean
+}
+
 
 
 const pajamaImages: Record<string, string> = {
@@ -44,7 +57,7 @@ function PajamaImage({ categorie } : { categorie: string } ) {
     }
 }
 
-export default function PijamaPage() {
+export default function PijamaPage(props: ProductCard) {
     const sizesText : string[] = ["PP", "P", "M", "G", "GG"]
     const [choosenSize, setChoosenSize] = useState<string>("");
     const [quantity, setQuantity] = useState<number>(1);
@@ -56,6 +69,9 @@ export default function PijamaPage() {
     console.log("pajamaId: ", pajamaId)
     console.log("pajama: ", pajama)
     console.log("pajama sizes: ", pajama?.sizes)
+
+    const{toggleFavorite} = useFavorite()
+    
 
 
     function increaseQuantity() {
@@ -71,9 +87,17 @@ export default function PijamaPage() {
     }
 
     function handleLike(){
-        setLiked(curtido => !curtido)
+        let stateLiked = !liked 
+        console.log("liked atual:", liked, "novo estado:", stateLiked)
+        setLiked(stateLiked)
+        toggleFavorite({id: pajamaId ?? "", favorite: stateLiked })
     }
 
+        useEffect(() => {
+        if (pajama) setLiked(pajama.favorite ?? false)
+    }, [pajama])
+
+    
 
 
     return (

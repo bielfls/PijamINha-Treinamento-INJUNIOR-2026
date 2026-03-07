@@ -1,6 +1,6 @@
 import { baseService } from "./base-service";
 import type { HttpResponse } from "../types/http";
-import type { GetPajamasResponse, Pijama } from "../types/home";
+import type { GetPajamasResponse, Pajama, Pijama } from "../types/home";
 import { httpAdapter } from "../lib/adapter";
 import { apiRoutes } from "../lib/config";
 
@@ -23,11 +23,11 @@ class ProductService extends baseService {
     }
 
     // Para a Página Individual
-    public async getPajamaById(id: number): Promise<HttpResponse<Pijama[]>> {
+    public async getPajamaById(id: string): Promise<HttpResponse<Pajama>> {
 
-        return this.execute<void, Pijama[]>({
+        return this.execute<void, Pajama>({
             method: "GET",
-            url: `${apiRoutes.PRODUCTSHOME}/${id}`
+            url: `${apiRoutes.PRODUCTSHOME}${id}`
         })
     }
 
