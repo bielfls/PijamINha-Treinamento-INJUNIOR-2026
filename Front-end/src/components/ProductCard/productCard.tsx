@@ -3,6 +3,7 @@ import likeon from "../../assets/Favorito.svg"
 import likeoff from "../../assets/Favoritado.svg"
 import backgroundImage from "../../assets/Front view of a young lady in pajamas staying in bed.png"
 import { useEffect, useState } from "react"
+import { useFavorite } from "../../hooks/use-favorite"
 import "./style.module.css"
 
 
@@ -12,6 +13,7 @@ interface ProductCard{
     name: string,
     price: number,
     parcela: string,
+    favorite: boolean
 }
 
 
@@ -19,8 +21,15 @@ interface ProductCard{
 
 export default function ProductCard(props: ProductCard){
 
-    const[liked, setLiked] = useState(true);
+    const[liked, setLiked] = useState(props.favorite ?? false);
 
+    useEffect(() => {
+
+        setLiked(props.favorite ?? false)
+
+    }, [props.favorite])
+
+    const{toggleFavorite} = useFavorite()
 
     function formatPrice(price:number) : string{
         return price.toFixed(2).replace(".", ",")
@@ -31,12 +40,11 @@ export default function ProductCard(props: ProductCard){
     }
     
     function handleLike(){
-        setLiked(curtido => !curtido)
-    }
+        let stateLiked = !liked
+        setLiked(stateLiked)
+        toggleFavorite({id: props.id, favorite: stateLiked })
 
-    function addFavorito(id: string){
     }
-
    
 
     return(

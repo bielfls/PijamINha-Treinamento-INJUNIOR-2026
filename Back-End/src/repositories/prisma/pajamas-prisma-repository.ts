@@ -1,5 +1,6 @@
 import { prisma } from '@/libs/prisma.js'
 import { Prisma } from '@/@types/prisma/client.js'
+import type { PajamaWithSizes } from '@/http/presenters/pajamas-presenter.js'
 
 export class PrismaPajamasRepository {
     async create(data: Prisma.PajamasCreateInput) {
@@ -24,13 +25,14 @@ export class PrismaPajamasRepository {
         return pajama
     }
 
-    async update(pajamaId: string, size: string, quantity: number): Promise<void> {
-        await prisma.pajamas.update({
+    async update(pajamaId: string, favorite?: boolean, size?: string, quantity?: number): Promise<PajamaWithSizes> {
+        return await prisma.pajamas.update({
             where: {
                 publicId: pajamaId
             },
             data: {
-                sizes: {
+                favorite: favorite !== undefined ? favorite : undefined,
+                sizes: size? {
                     updateMany: {
                         where: { 
                             size: size
@@ -39,8 +41,9 @@ export class PrismaPajamasRepository {
                             stockQuantity: quantity
                         }
                     }
-                }
-            }
+                } : undefined
+            },
+            include: { sizes: true }
         })
     }
     

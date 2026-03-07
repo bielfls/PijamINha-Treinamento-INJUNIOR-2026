@@ -26,8 +26,6 @@ const router = createBrowserRouter([
             {path: "cartPage", element: <RouterProtection allowedRoles={["Logged"]}><CartPage/></RouterProtection>},
             {path: "favoritos", element: <Favorites/>},
             {index: true, element: <Home/>},
-            
-
 
         ]
     }
