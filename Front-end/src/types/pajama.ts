@@ -13,6 +13,7 @@ export interface Pajama{
 }
 export interface CartPajama extends Pajama{
     size:string;
+    stock: number;
     quantity:number;
     pajamasId: number;
 }

@@ -1,6 +1,7 @@
 
 
 .cardContainer{
+    position: relative;
     width: 408px;
     height: 837px;
     display: flex;

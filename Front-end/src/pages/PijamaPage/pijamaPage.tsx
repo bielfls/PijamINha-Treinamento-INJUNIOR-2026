@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-=======
-import { useState } from "react";
+import { useFavorite } from "../../hooks/use-favorite";
 import { useNavigate, useParams } from "react-router-dom";
->>>>>>> 753afecf6db46adf9411688e076b542f78a87684
 import styles from "./styles.module.css"
 import plusSymbol from "../../assets/Plus Math.png"
 import minusSymbol from "../../assets/Subtract.png"
@@ -21,10 +17,8 @@ import maleIcon from "../../assets/Property 1=Masculino.png"
 import femaleIcon from "../../assets/Property 1=Feminino.png"
 import unissexIcon from "../../assets/Property 1=Variant4.png"
 import familyIcon from "../../assets/Property 1=Familia.png"
-<<<<<<< HEAD
-import { useFavorite } from "../../hooks/use-favorite";
-
-
+import usePajamaStore from '../../stores/CartStore';
+import type { CartPajama } from "../../types/pajama";
 
 interface ProductCard{
     id: string,
@@ -36,9 +30,6 @@ interface ProductCard{
 }
 
 
-=======
-import usePajamaStore from '../../stores/CartStore';
->>>>>>> 753afecf6db46adf9411688e076b542f78a87684
 
 const pajamaImages: Record<string, string> = {
   "Adulto": adultIcon,
@@ -114,14 +105,18 @@ export default function PijamaPage(props: ProductCard) {
         if (!pajama) return;
 
        
-        const cartItem = {
+        const cartItem: CartPajama= {
             ...pajama,
             id: pajama.id,
             name: pajama.name,
             image: pajama.image,
             price: calculateFinalPrice(pajama), // Salva já o preço final calculado
             size: choosenSize,
-            quantity: quantity
+            quantity: quantity,
+            pajamasId: 1,
+            // stock:  pajama?.sizes.find(s => s.size === choosenSize)?.stockQuantity}
+            stock: 15,
+            salePercent: pajama.salePercent,
         };
 
        

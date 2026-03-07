@@ -7,6 +7,7 @@ import DataFormCart from '../../components/DataFormCart';
 import PayFormCart from '../../components/PayFormCart';
 import ShopCompleted from '../../components/ShopCompleted';
 import { Link, useNavigate } from 'react-router-dom';
+import usePajamaStore from '../../stores/CartStore';
 
 export default function CartPage() {
     const [buyerData, setBuyerData] = useState<any>(null);
