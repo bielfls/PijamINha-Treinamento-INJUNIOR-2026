@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./styles.module.css"
 import plusSymbol from "../../assets/Plus Math.png"
 import minusSymbol from "../../assets/Subtract.png"
@@ -16,7 +16,7 @@ import maleIcon from "../../assets/Property 1=Masculino.png"
 import femaleIcon from "../../assets/Property 1=Feminino.png"
 import unissexIcon from "../../assets/Property 1=Variant4.png"
 import familyIcon from "../../assets/Property 1=Familia.png"
-
+import usePajamaStore from '../../stores/CartStore';
 
 const pajamaImages: Record<string, string> = {
   "Adulto": adultIcon,
@@ -53,6 +53,8 @@ export default function PijamaPage() {
     const params = useParams()
     const pajamaId = params.id;
     const { data: pajama, isPending, isError} = useIdPajama(pajamaId? pajamaId : ""  );
+    const { addToCart } = usePajamaStore();
+    const navigate = useNavigate();
     console.log("pajamaId: ", pajamaId)
     console.log("pajama: ", pajama)
     console.log("pajama sizes: ", pajama?.sizes)
@@ -73,6 +75,34 @@ export default function PijamaPage() {
     function handleLike(){
         setLiked(curtido => !curtido)
     }
+    function handleAddToCart() {
+       
+        if (choosenSize === "") {
+            alert("Por favor, selecione um tamanho antes de adicionar ao carrinho!");
+            return;
+        }
+
+        
+        if (!pajama) return;
+
+       
+        const cartItem = {
+            ...pajama,
+            id: pajama.id,
+            name: pajama.name,
+            image: pajama.image,
+            price: calculateFinalPrice(pajama), // Salva já o preço final calculado
+            size: choosenSize,
+            quantity: quantity
+        };
+
+       
+        addToCart(cartItem);
+
+       
+        navigate("/cartPage");
+    }
+    
 
 
 
@@ -131,7 +161,9 @@ export default function PijamaPage() {
                             </div>}
 
                             <div className={styles.shopFavDiv}>
-                                <Link to="/cartPage" className={styles.addCartBtn}>ADICIONAR AO CARRINHO</Link>
+                               <button onClick={handleAddToCart} className={styles.addCartBtn}>
+                                    ADICIONAR AO CARRINHO
+                                </button>
                                 
 
                                     <label style={{cursor: "pointer"}}>
@@ -198,4 +230,4 @@ export default function PijamaPage() {
             </main>
         </>
     )
-} 
+}

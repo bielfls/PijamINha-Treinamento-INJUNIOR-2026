@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function CartPage() {
     const [buyerData, setBuyerData] = useState<any>(null);
+    const { cart, removeFromCart } = usePajamaStore();
     const [modalStep, setModalStep] = useState<"data" | "payment" | "completed" | null>(null);
     const navigate = useNavigate();
 
