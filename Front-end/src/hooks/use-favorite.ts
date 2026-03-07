@@ -9,7 +9,7 @@ export function useFavorite(){
         onSuccess: () => {
             console.log("PATCH sucesso, invalidando cache...")
             queryClient.invalidateQueries({queryKey: ["fav-pjs"]})
-            
+            queryClient.invalidateQueries({queryKey: ["catalog"]})
         }
     })  
 

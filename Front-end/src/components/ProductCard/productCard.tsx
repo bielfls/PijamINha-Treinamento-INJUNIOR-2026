@@ -23,11 +23,7 @@ export default function ProductCard(props: ProductCard){
 
     const[liked, setLiked] = useState(props.favorite ?? false);
 
-    useEffect(() => {
 
-        setLiked(props.favorite ?? false)
-
-    }, [props.favorite])
 
     const{toggleFavorite} = useFavorite()
 
@@ -40,7 +36,8 @@ export default function ProductCard(props: ProductCard){
     }
     
     function handleLike(){
-        let stateLiked = !liked
+        let stateLiked = !liked 
+        console.log("liked atual:", liked, "novo estado:", stateLiked)
         setLiked(stateLiked)
         toggleFavorite({id: props.id, favorite: stateLiked })
 
@@ -59,7 +56,7 @@ export default function ProductCard(props: ProductCard){
                             checked={liked}
                             style={{display: "none"}}
                         />
-                        <img src={liked ? likeon : likeoff} alt="Liked" /> 
+                        <img src={liked ? likeoff : likeon} alt="Liked" /> 
                     </label>
                 </div>
             </div>
